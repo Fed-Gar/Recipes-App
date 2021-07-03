@@ -1,10 +1,11 @@
-const server = require('./src/app.js');
-const { db } = require('./src/db.js');
 require('dotenv').config();
+const server = require('./src/app.js');
+const { conn } = require('./src/db.js');
 
 const { PORT } = process.env || 3001;
 
-db.sync({ alter: true }).then(() => {
+conn.sync({ force: true }).then(() => {
+  console.log(`Base de datos conectada con exito!`);
   server.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}...`); 
   });
