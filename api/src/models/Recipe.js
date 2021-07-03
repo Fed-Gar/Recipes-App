@@ -4,9 +4,28 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('recipe', {
+    id: {
+      type: DataTypes.UUID,
+      // como la api maneja los ids como numeros para diferenciarlos de los mios uso uuid
+      primaryKey: true,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    summary: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    score: {
+      type: DataTypes.DECIMAL,
+    },
+    health: {
+      type: DataTypes.DECIMAL,
+    },
+    steps: {
+      type: DataTypes.TEXT,
     },
   });
 };
