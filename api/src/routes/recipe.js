@@ -35,6 +35,7 @@ router.get('/', (req, res, next) => {
         })
         .catch(error => next(error));
 });
+
 /*
 GET /recipes/{idReceta}:
 Obtener el detalle de una receta en particular
@@ -43,8 +44,23 @@ Incluir los tipos de dieta asociados
 */
 router.get('/:idReceta', (req, res, next) => {
     const { idReceta } = req.params;
-    const myRecipe = Recipe.findByPk(idReceta);
-    const apiRecipe = axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`);
+    if(Recipe) {
+        Recipe.findByPk(idReceta)
+        .then(recipe => res.status(200).json(recipe))
+        .catch(error => next(error));
+    };
+    axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
+        .then(recipe => {
+            res.status(200).json({
+                title: recipe.data.title,
+                summary: recipe.data.summary,
+                score: recipe.data.spoonacularScore,
+                health: recipe.data.healthScore,
+                steps: recipe.data.analyzedInstructions[0].steps,
+            });
+        })
+        .catch(error => next(error));
+    // res.status(200).send('No hay una receta con ese ID...');
 });
 
 /*
