@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { Recipe } = require('../models/Recipe'); // chequear
+const { Recipe } = require('../db.js'); 
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
@@ -39,8 +39,7 @@ router.get('/', (req, res, next) => {
 /*
 GET /recipes/{idReceta}:
 Obtener el detalle de una receta en particular
-Debe traer solo los datos pedidos en la ruta de detalle de receta
-Incluir los tipos de dieta asociados
+Debe traer solo los datos pedidos en la ruta de detalle de receta:
 */
 router.get('/:idReceta', (req, res, next) => {
     const { idReceta } = req.params;
@@ -51,12 +50,17 @@ router.get('/:idReceta', (req, res, next) => {
     };
     axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
         .then(recipe => {
+            const { data } = recipe;
+            console.log('data: ', data);
             res.status(200).json({
-                title: recipe.data.title,
-                summary: recipe.data.summary,
-                score: recipe.data.spoonacularScore,
-                health: recipe.data.healthScore,
-                steps: recipe.data.analyzedInstructions[0].steps,
+                title: data.title,
+                image: data.image,
+                score: data.spoonacularScore,
+                health: data.healthScore,
+                summary: data.summary,
+                typeDish: data.dishTypes,
+                typeDiet: data.diets,
+                steps: data.analyzedInstructions[0].steps,
             });
         })
         .catch(error => next(error));
@@ -68,13 +72,26 @@ POST /recipe:
 Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
 Crea una receta en la base de datos
 */
-router.post('/', (req, res) => {
-    const { data } = req.body;
-    recipe.create({
-        ...data,
-        id: uuidv4(),
+router.post('/', (req, res, next) => {
+    // const { name, summary, score, health, steps } = req.body;
+    const { name, summary, score, health, steps } = req.body;
+    const id = uuidv4();
+    Recipe.findOrCreate({
+        where: {name: name},
+        defaults: {
+            id: id,
+            name,
+            summary,
+            score,
+            health,
+            steps,
+        },
     })
-    .then(recipe => res.status(200).json(data))
+    .then(data => {
+        const [recipe, created] = data;
+        if(created) return res.status(200).json('Successfully created');
+        return res.status.json('The recipe already exist');
+    })
     .catch(error => next(error));
 });
 
