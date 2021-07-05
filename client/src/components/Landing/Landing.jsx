@@ -11,7 +11,7 @@ export default function Landing() {
                 <img src={imgFood} alt="Imagen de comida" />
                 <div className={styles.text}> 
                     <h1> Bienvenidos! </h1>
-                    <NavLink exact to="/home" > Click para ingresar... </NavLink>
+                    <NavLink to="/home" > Click para ingresar... </NavLink>
                 </div>
             </div>
         </div>
