@@ -46,17 +46,16 @@
 
 .text h1 {
     color: white;
-    font-size: 3.5rem;
+    font-size: 4.5rem;
 }
 
 .text a {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--f-color);
     text-decoration: none;
 }
 
 .text a:hover {
     color: var(--color-3);
-
-    transform: scale(1.1);
+    font-weight: bold;
 }
