@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  return sequelize.define('recipe', {
+  sequelize.define('recipe', {
     id: {
       type: DataTypes.UUID,
       // como la api maneja los ids como numeros para diferenciarlos de los mios uso uuid
