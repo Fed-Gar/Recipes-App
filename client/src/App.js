@@ -1,11 +1,20 @@
-import './App.css';
+import React from 'react'
+import { Route, Switch } from "react-router-dom";
 
-function App() {
+import Landing from './components/Landing/Landing';
+// import Nav from './components/Nav/Nav';
+// import Home from './components/Home/Home';
+// import Error404 from './components/Error/Error404';
+
+export default function App() {
   return (
-    <div className="App">
-      <h1>Henry Food</h1>
-    </div>
+    <>
+      {/* <Nav /> */}
+      <Switch>
+        <Route path="/" exact component={Landing} />
+        {/* <Route path="/" exact component={Home} /> */}
+        {/* <Route path="*" component={Error404} /> */}
+      </Switch>
+    </>
   );
-}
-
-export default App;
+};
