@@ -3,14 +3,14 @@ import Search from '../Search/Search';
 import Ordering from '../Ordering/Ordering';
 import Pagination from '../Pagination/Pagination';
 
-import styles from "./home.module.css";
+import styles from "./searchBar.module.css";
 
-export default function Home() {
+export default function SearchBar() {
   return (
-		<div className={styles.homecont}>
+	<div className={styles.barCont}>
             <Search />
             <Ordering />
             <Pagination />
-		</div>
-	);
+	</div>
+  );
 };
