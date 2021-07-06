@@ -41,7 +41,7 @@ Debe traer solo los datos pedidos en la ruta de detalle de receta:
 router.get('/:idReceta', (req, res, next) => {
     const { idReceta } = req.params;
     // if(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(idReceta)) {
-    if(idReceta.length = 32) {
+    if(idReceta.length = 36) {
         Recipe.findByPk(idReceta)
         .then(recipe => { 
             if(recipe) {
