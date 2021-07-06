@@ -14,9 +14,9 @@ Si no existe ninguna receta mostrar un mensaje adecuado
 router.get('/', (req, res, next) => {
     const { ingredient } = req.query;
     const myRecipes = Recipe.findAll({
-            where: {
-                name: ingredient,
-            },
+                where: {
+                    name: ingredient,
+                },
     });
     const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`);
     Promise.all([myRecipes, apiRecipes])
@@ -25,10 +25,10 @@ router.get('/', (req, res, next) => {
             const response = [...my, ...api.data.results];
             if(response.length > 0) {
                 response.splice(9);
-                // console.log('response: ', response);
                 return res.status(200).json(response);
-            };
+            }
             res.status(200).json('No hay recetas...');
+            
         })
         .catch(error => next(error));
 });
@@ -40,7 +40,8 @@ Debe traer solo los datos pedidos en la ruta de detalle de receta:
 */
 router.get('/:idReceta', (req, res, next) => {
     const { idReceta } = req.params;
-    if(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(idReceta)) {
+    // if(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(idReceta)) {
+    if(idReceta.length = 32) {
         Recipe.findByPk(idReceta)
         .then(recipe => { 
             if(recipe) {
