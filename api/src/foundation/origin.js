@@ -21,7 +21,8 @@ const origin = () => {
     .catch(error => console.log(error));
     Type.findAll()
     .then(data => {
-        if(!data) {
+        console.log('DATAAA: ', data);
+        if(data.length < 1) {
             diets.forEach(diet => {
                 Type.create({
                     id: uuidv4(),
@@ -31,6 +32,7 @@ const origin = () => {
                 })
                 .catch(error => console.log(error));
             });
+            return;
         } 
         console.log('Ya creado...');
     })
