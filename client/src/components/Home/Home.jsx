@@ -2,7 +2,6 @@ import React from 'react';
 import Nav from '../Nav/Nav';
 // import SearchBar from '../SearchBar/SearchBar';
 // import Recipes from '../Recipes/Recipes';
-import Pagination from '../Pagination/Pagination';
 
 import styles from "./home.module.css";
 
@@ -12,7 +11,6 @@ export default function Home() {
 			<Nav />
 			{/* <SearchBar /> */}
 			{/* <Recipes /> */}
-			<Pagination />
 		</div>
 	)
 };
