@@ -11,6 +11,9 @@
   --color-4:rgb(96, 152, 212);
   --ff: 'Akaya Kanadaka', cursive;
   --f-color: rgb(255, 255, 255);
+  --shad: 0px 0px 15px 10px rgba(0,0,0,0.8);
+  --shad-1: 0px 0px 20px -5px #000000;
+  --rad: 2em;
 }
 
 body {
