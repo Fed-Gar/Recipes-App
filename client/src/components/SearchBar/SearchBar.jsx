@@ -7,10 +7,10 @@ import styles from "./searchBar.module.css";
 
 export default function SearchBar() {
   return (
-	<div className={styles.barCont}>
-            <Search />
-            <Ordering />
-            <Pagination />
-	</div>
+	    <div className={styles.barCont}>
+        <Search />
+        <Ordering />
+        <Pagination />
+	    </div>
   );
 };
