@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from "./nav.module.css";
-import imgFood from '../../sources/arroz.jpg';
+import imgFood from '../../sources/cooking.png';
 
 export default function Nav() {
   return (
