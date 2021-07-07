@@ -15,7 +15,7 @@ export default function Ordering() {
   }; 
   return (
 		<div className={styles.ordCont}>
-			<label for="order"> Ordenar por: </label>
+			<label htmlFor="order"> Ordenar por: </label>
             <select 
 				name="order" 
 				id="order" 

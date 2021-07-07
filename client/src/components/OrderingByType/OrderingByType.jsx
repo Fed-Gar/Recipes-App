@@ -1,21 +1,29 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { orderByTypes } from '../../actions/actionsCreator';
+import { orderByType } from '../../actions/actionsCreator';
 
 import styles from "./orderingByType.module.css";
 
 export default function OrderingByType() {
-// ordenamiento orden alfabetico y puntuacion
+// ordenamiento por tipo
   const dispatch = useDispatch();
   const recipesLoaded = useSelector(state => state.recipesLoaded);
+  const recipesTypes = useSelector(state => state.recipesTypes);
+  const handleChange = e => {
+    const { value } = e.target;
+	dispatch(orderByType(recipesLoaded, value)); 
+  };
   return (
 		<div className={styles.ordCont}>
-			<label for="order"> Ordenar de: </label>
-            <select name="name" id="order">
+			<label htmlFor="order"> Ordenar de: </label>
+            <select name="order" id="order" className={styles.select} onChange={handleChange}>
 				<option value="default"> ---------------------- </option>
-				<option value="aZ"> A - Z </option>
-				<option value="zA"> Z - A </option>
+				{
+					recipesTypes.map((type, i) => {
+						<option value={type} key={i}> {type} </option>
+					})
+				}
 			</select>
 		</div>
 	);
-};
+};    
