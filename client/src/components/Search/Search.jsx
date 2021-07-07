@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getRecipes } from '../../actions/index';
+import { getRecipes } from '../../actions/actionsCreator';
 
 import styles from "./search.module.css";
 import { FaSearch } from 'react-icons/fa';

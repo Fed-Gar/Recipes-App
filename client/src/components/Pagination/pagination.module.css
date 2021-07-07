@@ -1,0 +1,48 @@
+.pagCont {
+    width: 13em;
+    height: 4.5em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1.8em;
+
+    background-color: var(--color-4);
+    box-shadow: var(--shad-1);
+    border-radius: 24px;
+}
+
+.pagCont p {
+    margin-bottom: .5em;
+
+    font-size: 1.2rem;
+    color: var(--color-2);
+}
+
+.pagCont span {
+    font-size: 1.2rem;
+    color: var(--color-2);
+}
+
+.pag {
+    width: 12em;
+    height: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.pag button {
+    font-size: 1.2rem;
+
+    background-color: var(--color-4);
+    color: var(--color-2);
+}
+
+.pag button:hover {
+    cursor: pointer;
+    color: var(--color-3);
+}
