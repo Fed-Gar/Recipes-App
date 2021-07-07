@@ -3,45 +3,40 @@ import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/index';
 
 import styles from "./search.module.css";
+import { FaSearch } from 'react-icons/fa';
 
 function Search({ getRecipes }) {
-	const [input, setInput] = useState({
-		ingredient: "",
-	});
+	const [input, setInput] = useState('');
 
 	function handleChange(event){
-    	setInput({
-    		ingredient: event.target.value,
-    	});
+    	setInput(event.target.value);
 	};
 
     function handleSubmit(event){
     	event.preventDefault();
-    	if(input.ingredient) {
-     		getRecipes(input.ingredient);
+    	if(input) {
+     		getRecipes(input);
     	} else {
       		alert("Debes ingresar un ingrediente...");
     	};
-		setInput({
-			ingredient: '',
-		});
+		setInput('');
   	};
 
 	return (
-			<div className="cont">
-				<form onSubmit={handleSubmit}>
-					<input
-						className="input"
-						type="text"
-						placeholder="Search Country..."
-						name="ingredient"
-						autoComplete="off"
-						value={input.ingredient}
-						onChange={handleChange}
-					/>
-					<button type="submit" className="btns"> Search </button>
-				</form>
-			</div>
+			<form className={styles.form}>
+			{/* <form onSubmit={handleSubmit}> */}
+				<input
+					type="text"
+					placeholder="Ingrediente..."
+					name="ingredient"
+					autoComplete="off"
+					className={styles.inp}
+					value={input}
+					onChange={handleChange}
+				/>
+				{/* <button type="submit" className={styles.btn}> Search </button> */}
+				<span className={styles.btn} onClick={handleSubmit}> <FaSearch /> </span>
+			</form>
 		);
 };
 

@@ -1,0 +1,47 @@
+.form {
+    width: 13em;
+    height: 3em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2em;
+
+    background-color: var(--color-4);
+    box-shadow: var(--shad-1);
+    border-radius: 24px;
+}
+
+.inp {
+    width: 9em;
+    height: 2.75em;
+
+    margin-left: 1em;
+
+    font-size: 1.2rem;
+
+    background-color: transparent;
+    color: var(--color-2);
+    border: 1px solid transparent;
+    border-radius: 24px;
+    outline: none;
+}
+
+.inp::placeholder {
+    color: var(--color-2);
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-right: 1em;
+
+    font-size: 1.2rem;
+    color: var(--color-2);
+    border-radius: 50%;
+
+    cursor: pointer;
+}
