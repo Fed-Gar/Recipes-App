@@ -19,7 +19,6 @@ export default function Ordering() {
             <select 
 				name="order" 
 				id="order" 
-				className={styles.select} 
 				onChange={handleChange}>
 					<option value="default"> ---------------------- </option>
 					<optgroup label="Nombre">

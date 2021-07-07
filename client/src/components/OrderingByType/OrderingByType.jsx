@@ -15,8 +15,8 @@ export default function OrderingByType() {
   };
   return (
 		<div className={styles.ordCont}>
-			<label htmlFor="order"> Ordenar de: </label>
-            <select name="order" id="order" className={styles.select} onChange={handleChange}>
+			<label htmlFor="order"> Ordenar por dietas: </label>
+            <select name="order" id="order" onChange={handleChange}>
 				<option value="default"> ---------------------- </option>
 				{
 					recipesTypes.map((type, i) => {
