@@ -1,5 +1,5 @@
 import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAME,
-  FILTER_BY_TYPE, FILTER_CREATED, } from '../actions/actions';
+        FILTER_BY_TYPE, FILTER_CREATED, } from '../actions/actions';
 
 const initialState = {
   recipes: 0,
@@ -33,16 +33,16 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipesLoaded: payload,
       };
-    case FILTER_CREATED:
-      return {
-        ...state,
-        filterByCreated: payload,
-      };  
     case FILTER_BY_TYPE:
       return {
         ...state,
         filterByType: payload,
-      }  
+      };   
+    case FILTER_CREATED:
+      return {
+        ...state,
+        filterByCreated: payload,
+      };   
     default:
       return state;    
   };
