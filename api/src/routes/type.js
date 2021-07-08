@@ -13,16 +13,31 @@ Obtener todos los tipos de dieta posibles
 En una primera instancia, cuando no exista ninguno, 
 deberán precargar la base de datos con los tipos de datos indicados por spoonacular acá
 */
+// router.get('/', (_req, res, next) => {
+//     console.log('ATRO');
+//     if(loaded) {
+//         Type.findAll()
+//         .then(diets => {
+//             console.log('Traidas desde la DB...')
+//             return res.status(200).json(diet);
+//         })
+//         .catch(error => next(error));
+//     };
+//     diets.forEach(diet => {
+//         Type.create({
+//             id: uuidv4(),
+//             name: diet,   
+//         })
+//     })
+//     .then(diets => {
+//         loaded = true;
+//         console.log('Dietas creadas...')
+//     })
+//     .catch(error => next(error));
+// });
+
 router.get('/', (_req, res, next) => {
     console.log('ATRO');
-    if(loaded) {
-        Type.findAll()
-        .then(diets => {
-            console.log('Traidas desde la DB...')
-            return res.status(200).json(diet);
-        })
-        .catch(error => next(error));
-    };
     diets.forEach(diet => {
         Type.create({
             id: uuidv4(),

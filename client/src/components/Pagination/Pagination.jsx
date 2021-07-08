@@ -16,7 +16,7 @@ export default function Pagination() {
   const group = 10;
   const finalCount = numPag * group;
   const initialCount = finalCount - group;
-  const recipes = recipesLoaded.slice(initialCount, finalCount)
+  const recipes = recipesLoaded.slice(initialCount, finalCount);
 
   const handlePrev = e => {
 	if(numPag > 1) setNumPage(numPag - 1);
@@ -30,15 +30,19 @@ export default function Pagination() {
 	  dispatch(getRecipes());
   }, []);
 
-  return (
-		<div className={styles.pagCont}>
-			{/* <button onClick={() => setNumPage(numPag - 1)}> <HiOutlineArrowCircleLeft/> </button> */}
-			<p> Páginas </p>
-			<div className={styles.pag}>
-				<button onClick={ handlePrev }> izq </button>
-				<span> { numPag } </span>
-				<button onClick={ handleNext }> der </button>
-			</div>
-		</div>
-	);
+  if(recipesLoaded.length < 1) {
+    return <div> Cargando... </div>
+  } else {
+      return (
+      <div className={styles.pagCont}>
+			  {/* <button onClick={() => setNumPage(numPag - 1)}> <HiOutlineArrowCircleLeft/> </button> */}
+			  <p> Páginas </p>
+			  <div className={styles.pag}>
+			  	<button onClick={ handlePrev }> izq </button>
+				  <span> { numPag } </span>
+				  <button onClick={ handleNext }> der </button>
+			  </div>
+		  </div>
+    );
+  };
 };

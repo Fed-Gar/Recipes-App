@@ -6,38 +6,52 @@ const { v4: uuidv4 } = require('uuid');
 
 const { BASE_URL, API_KEY } = process.env;
 
-router.get('/', (req, res, next) => {
+// router.get('/', (req, res, next) => {
+//   // carga la DB
+//   const { number } = req.query;
+//   axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
+//   .then(response => {
+//     const { data } = response;
+//     data.results.forEach(recipe => {
+//       console.log('ATROOODEEEN');
+//       axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
+//       .then(response => {
+//         Recipe.findOrCreate({
+//           where: {
+//             id: response.id,
+//           },
+//           defaults: {
+//             id: response.id,
+//             name: response.title,
+//             summary: response.summary,
+//             img: response.image,
+//             score: response.spoonacularScore,
+//             health: response.healthScore,
+//             steps: response.analyzedInstructions[0].steps,
+//           },
+//         })
+//         console.log('Recetas cargadas...');
+//         res.status(200).text(ok);
+//       })
+//       .catch(error => (next));
+//     });
+//   })
+//   .catch(error => next(error)); 
+// });
+
+//---------------------------------------------------------------------------------------------
+router.get('/', (_req, res, next) => {
   // carga la DB
-  const { number } = req.query;
-  axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
-  .then(response => {
-    const { data } = response;
-    data.results.forEach(recipe => {
-      console.log('ATROOODEEEN');
-      axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
-      .then(response => {
-        Recipe.findOrCreate({
-          where: {
-            id: response.id,
-          },
-          defaults: {
-            id: response.id,
-            name: response.title,
-            summary: response.summary,
-            img: response.image,
-            score: response.spoonacularScore,
-            health: response.healthScore,
-            steps: response.analyzedInstructions[0].steps,
-          },
-        })
+      Recipe.findAll()
+      .then(recipes => {
         console.log('Recetas cargadas...');
-        res.status(200).text(ok);
+        res.status(200).json(recipes);
       })
       .catch(error => (next));
-    });
-  })
-  .catch(error => next(error)); 
 });
+//---------------------------------------------------------------------------------------------
+
+
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
