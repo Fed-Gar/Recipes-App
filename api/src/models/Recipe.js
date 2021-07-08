@@ -18,6 +18,12 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    img: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      }
+    },
     score: {
       type: DataTypes.DECIMAL,
     },
