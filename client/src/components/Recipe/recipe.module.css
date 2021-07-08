@@ -1,8 +1,39 @@
 .contRecipe {
-    width: 15em;
-    height: 15em;
+    width: 18em;
+    height: 16em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     margin: 1em;
 
+    background-color: var(--color-3);
+    border-radius: var(--rad);
+    box-shadow: var(--shad-1);
+}
+
+.contRecipe a {
+    font-size: 1.5rem;
+    color: var(--color-4);
+    font-weight: bold;
+    text-decoration: none;
+
+    margin-bottom: .5em;
+}
+
+
+.contRecipe span {
+    font-size: 1.2rem;
+
+    margin-bottom: .5em;
+}
+
+.contRecipe img {
+    width: 11em;
+    height: 9em;
+
     background-color: grey;
+    border-radius: var(--rad);
 }

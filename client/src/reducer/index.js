@@ -1,5 +1,6 @@
 import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAME,
-        FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,} from '../actions/actions';
+        FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,
+        SET_PAGINATION  } from '../actions/actions';
 
 const initialState = {
   numPag: 1,
@@ -42,7 +43,12 @@ export default function reducer(state = initialState, {type, payload}) {
       return {
         ...state,
         recipesLoaded: payload,
-      }    
+      }  
+    case SET_PAGINATION:
+      return {
+        ...state,
+        numPag: payload,
+      };  
     case FILTER_BY_TYPE:
       return {
         ...state,

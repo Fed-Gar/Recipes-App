@@ -28,9 +28,8 @@ export default function Recipes() {
         <div className={styles.contRecipes}>
           {
             recipes.map(recipe => { 
-              console.log('RECIPE: ', recipe)
               return (
-                  <Recipe 
+                  <Recipe key={recipe.id}
                     id={recipe.id}
                     name={recipe.name}
                     image={recipe.img}
