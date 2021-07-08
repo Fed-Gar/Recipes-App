@@ -1,6 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getRecipes } from '../../actions/actionsCreator';
+import React, { useState } from 'react';
+import { useSelector,  } from 'react-redux';
 
 import styles from "./pagination.module.css";
 // import { HiOutlineArrowCircleLeft } from 'react-icons/fa';
@@ -9,40 +8,26 @@ import styles from "./pagination.module.css";
 export default function Pagination() {
   const [numPag, setNumPage] = useState(1);
 
-  const dispatch = useDispatch();
-
-  const recipesLoaded = useSelector(state => state.recipesLoaded);
-
-  const group = 10;
-  const finalCount = numPag * group;
-  const initialCount = finalCount - group;
-  const recipes = recipesLoaded.slice(initialCount, finalCount);
+  const pag = useSelector(state => state.numPag);
+  // tengo que hacer que mi stado numPag sea igual al num de paginas
 
   const handlePrev = e => {
 	if(numPag > 1) setNumPage(numPag - 1);
   };
 
   const handleNext = e => {
-	if(numPag > 0) setNumPage(numPag + 1);
+	if(numPag < 17) setNumPage(numPag + 1);
   };
 
-  useEffect(()=> {
-	  dispatch(getRecipes());
-  }, []);
-
-  if(recipesLoaded.length < 1) {
-    return <div> Cargando... </div>
-  } else {
-      return (
-      <div className={styles.pagCont}>
-			  {/* <button onClick={() => setNumPage(numPag - 1)}> <HiOutlineArrowCircleLeft/> </button> */}
-			  <p> Páginas </p>
-			  <div className={styles.pag}>
-			  	<button onClick={ handlePrev }> izq </button>
-				  <span> { numPag } </span>
-				  <button onClick={ handleNext }> der </button>
-			  </div>
-		  </div>
-    );
-  };
+  return (
+    <div className={styles.pagCont}>
+			{/* <button onClick={() => setNumPage(numPag - 1)}> <HiOutlineArrowCircleLeft/> </button> */}
+			<p> Páginas </p>
+			<div className={styles.pag}>
+			  <button onClick={ handlePrev }> izq </button>
+				<span> { numPag } </span>
+				<button onClick={ handleNext }> der </button>
+			</div>
+		</div>
+  );
 };

@@ -2,7 +2,7 @@ import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAM
         FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,} from '../actions/actions';
 
 const initialState = {
-  recipes: 0,
+  numPag: 1,
   recipesLoaded: [],
   recipesTypes: [],
   filterByType: 'ALL',
