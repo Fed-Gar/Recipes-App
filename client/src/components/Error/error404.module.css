@@ -1,0 +1,35 @@
+.contError {
+    width: 40%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    left: 30%;
+    right: 30%;
+
+    margin-top: 3em;
+
+    background-color: var(--color-2);
+    border-radius: var(--rad);
+    padding: 1rem;
+    box-shadow: var(--shad-1);
+}
+
+.contError img {
+    max-width: 22em;
+    height: 22em;
+
+    border-radius: var(--rad);
+    margin-bottom: 2em;
+}
+
+.contError h3 {
+    margin: 1em;
+
+    font-size: 1.6rem;
+    color: var(--color-4);
+}
