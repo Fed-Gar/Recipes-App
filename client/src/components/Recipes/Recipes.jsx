@@ -22,7 +22,7 @@ export default function Recipes() {
   }, []);
 
   if(recipes.length < 1) {
-    return <div> Cargando... </div>
+    return <div className={styles.loading}> Cargando... </div>
   } else {
       return (
         <div className={styles.contRecipes}>
