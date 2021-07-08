@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const { Type } = require('../db.js'); 
+const { v4: uuidv4 } = require('uuid');
 
 const diets = ['Gluten Free', 'Ketogenic',' Vegetarian', 'Lacto-Vegetarian',
                 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
@@ -12,7 +13,8 @@ Obtener todos los tipos de dieta posibles
 En una primera instancia, cuando no exista ninguno, 
 deberán precargar la base de datos con los tipos de datos indicados por spoonacular acá
 */
-router.get('/', (req, res, next) => {
+router.get('/', (_req, res, next) => {
+    console.log('ATRO');
     if(loaded) {
         Type.findAll()
         .then(diets => {
