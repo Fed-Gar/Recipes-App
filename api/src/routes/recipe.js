@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const { BASE_URL, API_KEY } = process.env;
 
 router.get('/', (req, res, next) => {
+  // carga la DB
   const { number } = req.query;
   axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
   .then(response => {
@@ -74,8 +75,8 @@ router.get('/:idReceta', (req, res, next) => {
       Recipe.findByPk(idReceta)
       .then(recipe => { 
         if(recipe) {
-        // console.log('AAAAAAAAAA1: ', recipe);
-           return res.status(200).json(recipe);
+          // console.log('AAAAAAAAAA1: ', recipe);
+          return res.status(200).json(recipe);
         } else {
             return res.status(200).json('La receta con ese ID no existe...');
         };
@@ -87,16 +88,16 @@ router.get('/:idReceta', (req, res, next) => {
     const { data } = recipe;
     // console.log('AAAAAAAAAAAA: ', data);
     if(data.title) { 
-    res.status(200).json({
-      title: data.title,
-      image: data.image,
-      score: data.spoonacularScore,
-      health: data.healthScore,
-      summary: data.summary,
-      typeDish: data.dishTypes,
-      typeDiet: data.diets,
-      steps: data.analyzedInstructions[0].steps,
-    });
+      res.status(200).json({
+        title: data.title,
+        image: data.image,
+        score: data.spoonacularScore,
+        health: data.healthScore,
+        summary: data.summary,
+        typeDish: data.dishTypes,
+        typeDiet: data.diets,
+        steps: data.analyzedInstructions[0].steps,
+      });
     } else {
         res.status(200).json('La receta con ese ID no existe...');
     };
@@ -126,8 +127,8 @@ router.post('/', (req, res, next) => {
   })
   .then(data => {
     const [_recipe, created] = data;
-    if(created) return res.status(200).json('Receta creada con exito');
-    return res.status(200).json('La receta ya existe');
+    if(created) return res.status(200).json('Receta creada con exito...');
+    return res.status(200).json('La receta ya existe...');
   })
   .catch(error => next(error));
 });
