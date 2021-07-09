@@ -5,17 +5,25 @@ import { create } from '../../actions/actionsCreator';
 
 import styles from "./createRecipe.module.css";
 
+const regexText = new RegExp("^[a-zA-Z]*$");
+const regexUrl = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+
 function validate(state) {
   let errors = {};
-  if (!state.title) {
+  if(!state.title) {
     errors.title = 'Title is required';
   } else if (state.title.length > 4) {
     errors.username = 'Username is invalid';
   };
-  if (!state.summary) {
+  if(!state.summary) {
     errors.summary = 'Summary is required';
   } else if (state.summary.length > 4) {
     errors.summary = 'Summary is invalid';
+  };
+  if(state.img) {
+    if(regexUrl.test(state.img)) {
+    errors.image = 'Image is invalid';
+    };
   };
   return errors;
 };
@@ -91,20 +99,32 @@ export default function CreateRecipe() {
             name="score"
             value={state.score}
             autoComplete="off"
+            min="1" max="100" step="1"
             className={styles.input}
             onChange={handleChange}
         />
         <label className={styles.label} htmlFor="health"> Health </label>
         <input 
-            type='text'
+            type='number'
             id='health'
             name="health"
             value={state.health}
             autoComplete="off"
+            min="1" max="100" step="1"
             className={styles.input}
             onChange={handleChange}
         />
-        <button type="submit" className={styles.button}> Add </button>
+        <label className={styles.label} htmlFor="image"> Image </label>
+        <input 
+            type='text'
+            id='image'
+            name="image"
+            value={state.img}
+            autoComplete="off"
+            className={styles.input}
+            onChange={handleChange}
+        />
+        <button type="submit" className={styles.button}> Crear </button>
       </form>
     </div>  
   );
