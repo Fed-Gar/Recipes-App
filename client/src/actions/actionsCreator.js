@@ -6,14 +6,28 @@ import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAM
 const { BASE_URL, BASE_URL_TYPES } = process.env;
 
 function order(data, sort) {
-  if(sort === 'ASC') {
+  if(sort === 'menor') {
+    data.sort(function(a, b) {
+      if(a.score < b.score) return -1;
+      if(a.nscoreame > b.score) return 1;
+      return 0;
+    });
+  };
+  if(sort === 'mayor') {
+    data.sort(function(a, b) {
+      if(a.score > b.score) return -1;
+      if(a.score < b.score) return 1; 
+      return 0;
+    });
+  };
+  if(sort === 'aZ') {
     data.sort(function(a, b) {
       if(a.name < b.name) return -1;
       if(a.name > b.name) return 1;
       return 0;
     });
   };
-  if(sort === 'DESC') {
+  if(sort === 'zA') {
     data.sort(function(a, b) {
       if(a.name > b.name) return -1;
       if(a.name < b.name) return 1; 
@@ -25,7 +39,7 @@ function order(data, sort) {
 
 export function getRecipes() {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes`)
+    return axios(`${BASE_URL}`)
       .then(response => {
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
@@ -46,8 +60,8 @@ export function getDetail(id) {
 export function getTypes() {
   return function(dispatch) {
     return axios(`${BASE_URL_TYPES}`)
-      .then(data =>  {
-        dispatch({ type: GET_RECIPES_TYPES, payload: data });
+      .then(response =>  {
+        dispatch({ type: GET_RECIPES_TYPES, payload: response.data });
       });
   };
 };
