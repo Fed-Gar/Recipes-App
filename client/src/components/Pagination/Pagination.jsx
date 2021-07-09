@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setPagination } from '../../actions/actionsCreator';
 
@@ -12,12 +12,16 @@ export default function Pagination() {
 
   const dispatch = useDispatch();
 
+  const recipes = useSelector(state => state.recipesLoaded);
+
+  const max = Math.ceil(recipes.length / 6);
+
   const handlePrev = e => {
 	if(numPag > 1) setNumPage(numPag - 1);
   };
 
   const handleNext = e => {
-	if(numPag < 17) setNumPage(numPag + 1);
+	if(numPag < max) setNumPage(numPag + 1);
   };
 
   useEffect(()=> {
