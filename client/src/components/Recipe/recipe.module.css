@@ -8,6 +8,7 @@
     justify-content: center;
 
     margin: 1em;
+    padding: .5em;
 
     background-color: var(--color-3);
     border-radius: var(--rad);
