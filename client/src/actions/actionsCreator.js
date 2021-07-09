@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME,
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES, 
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from './actions';
-
-const { BASE_URL, BASE_URL_TYPES } = process.env;
 
 function order(data, sort) {
   if(sort === 'menor') {
@@ -38,7 +36,7 @@ function order(data, sort) {
 
 export function getRecipes() {
   return function(dispatch) {
-    return axios(`${BASE_URL}`)
+    return axios(`http://localhost:3001/recipes`)
       .then(response => {
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
@@ -48,7 +46,7 @@ export function getRecipes() {
 
 export function getDetail(id) {
   return function(dispatch) {
-    return axios(`${BASE_URL}/${id}`)
+    return axios(`http://localhost:3001/recipes/${id}`)
       .then(data => {
         dispatch({ type: GET_RECIPE_DETAIL, payload: data });
       })
@@ -58,8 +56,9 @@ export function getDetail(id) {
 
 export function getTypes() {
   return function(dispatch) {
-    return axios(`${BASE_URL_TYPES}`)
+    return axios(`http://localhost:3001/types`)
       .then(response =>  {
+        console.log('RESPONSEEEE: ', response);
         dispatch({ type: GET_RECIPES_TYPES, payload: response.data });
       });
   };
@@ -67,7 +66,7 @@ export function getTypes() {
 
 export function create() {
   return function(dispatch) {
-    return axios(`${BASE_URL}`)
+    return axios(`http://localhost:3001/recipes`)
       .then(data =>  {
         dispatch({ type: CREATE, payload: data });
       });
@@ -90,9 +89,9 @@ export function orderByScore(recipes, sort) {
   };
 };
 
-export function filterByType(filter) {
+export function filterByType(type) {
   return function(dispatch) {
-    dispatch({type: FILTER_BY_TYPE, payload: filter});
+    dispatch({type: FILTER_BY_TYPE, payload: type});
   };
 }; 
 

@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME,
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from '../actions/actions';
 
 const initialState = {
@@ -51,7 +51,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        filterByType: recipesLoaded.filter(),
+        recipesLoaded: state.recipesLoaded.filter(recipe => recipe.type !== payload.type),
       }; 
     default:
       return state;    
