@@ -25,25 +25,24 @@ Obtener todos los tipos de dieta posibles
 */
 router.get('/', (req, res, next) => {
     const { name } = req.query;
-    const search = name.toLowerCase();
-    if(!search) {
+    if(!name) {
         Type.findAll()
         .then(diets => {
-            return res.status(200).json(diets);
+            res.status(200).json(diets);
         })
         .catch(error => next(error));
-    };
+    } else {
+        const search = name.toLowerCase();
         Type.findAll({
             where: {
                 name: search,
             },
         })
         .then(diet => {
-            console.log('DIET: ', diet);
             res.status(200).json(diet);
         })
         .catch(error => next(error));
-
+    }
 });
 
 module.exports = router;
