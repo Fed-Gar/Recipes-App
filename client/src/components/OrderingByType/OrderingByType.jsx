@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { orderByType } from '../../actions/actionsCreator';
+import { getTypes, orderByType } from '../../actions/actionsCreator';
 
 import styles from "./orderingByType.module.css";
 
 export default function OrderingByType() {
 // ordenamiento por tipo
   const dispatch = useDispatch();
+
   const recipesLoaded = useSelector(state => state.recipesLoaded);
   const recipesTypes = useSelector(state => state.recipesTypes);
+
   const handleChange = e => {
     const { value } = e.target;
 	dispatch(orderByType(recipesLoaded, value)); 
   };
+
+  useEffect(() => {
+	dispatch(getTypes());
+  }, []);
+
   return (
 		<div className={styles.ordCont}>
 			<label htmlFor="order"> Ordenar por dietas: </label>

@@ -7,12 +7,15 @@ import styles from "./ordering.module.css";
 export default function Ordering() {
 // ordenamiento por orden alfabético y puntuacián
   const dispatch = useDispatch();
+
   const recipesLoaded = useSelector(state => state.recipesLoaded);
+
   const handleChange = e => {
     const { value } = e.target;
 	if(value === 'aZ' || value === 'zA') dispatch(orderByName(recipesLoaded, value)); 
 	if(value === 'menor' || value === 'mayor') dispatch(orderByScore(recipesLoaded, value)); 
   }; 
+  
   return (
 		<div className={styles.ordCont}>
 			<label htmlFor="order"> Ordenar por: </label>
