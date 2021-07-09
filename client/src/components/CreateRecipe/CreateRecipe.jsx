@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
+import Nav from '../Nav/Nav';
+
 import { create } from '../../actions/actionsCreator';
 
 import styles from "./createRecipe.module.css";
 
-const regexText = new RegExp("^[a-zA-Z]*$");
 const regexUrl = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
 
 function validate(state) {
@@ -70,62 +71,63 @@ export default function CreateRecipe() {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label} htmlFor="title" > Title </label>
-        <input
-            type="text"
-            id="title"
-            name = "title"
-            minlength="4"
-            value={state.title}
-            autoComplete="off"
-            className={styles.input}
-            onChange={handleChange}
-        />
-        <label className={styles.label} htmlFor="summary"> Summary </label>
-        <textarea 
-            id='summary' 
-            name="summary" 
-            value={state.summary} 
-            className={styles.textarea}
-            onChange={handleChange}
-        >
-        </textarea>  
-        <label className={styles.label} htmlFor="score"> Score </label>
-        <input 
-            type="number"
-            id='score'
-            name="score"
-            value={state.score}
-            autoComplete="off"
-            min="1" max="100" step="1"
-            className={styles.input}
-            onChange={handleChange}
-        />
-        <label className={styles.label} htmlFor="health"> Health </label>
-        <input 
-            type='number'
-            id='health'
-            name="health"
-            value={state.health}
-            autoComplete="off"
-            min="1" max="100" step="1"
-            className={styles.input}
-            onChange={handleChange}
-        />
-        <label className={styles.label} htmlFor="image"> Image </label>
-        <input 
-            type='text'
-            id='image'
-            name="image"
-            value={state.img}
-            autoComplete="off"
-            className={styles.input}
-            onChange={handleChange}
-        />
-        <button type="submit" className={styles.button}> Crear </button>
-      </form>
-    </div>  
+    <>
+      <Nav />
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label className={styles.label} htmlFor="title" > Title </label>
+          <input
+              type="text"
+              id="title"
+              name = "title"
+              minlength="4"
+              value={state.title}
+              autoComplete="off"
+              className={styles.input}
+              onChange={handleChange}
+          />
+          <label className={styles.label} htmlFor="summary"> Summary </label>
+          <textarea 
+              id='summary' 
+              name="summary" 
+              value={state.summary} 
+              className={styles.textarea}
+              onChange={handleChange}
+          >
+          </textarea>  
+          <label className={styles.label} htmlFor="score"> Score </label>
+          <input 
+              type="number"
+              id='score'
+              name="score"
+              value={state.score}
+              autoComplete="off"
+              min="1" max="100" step="1"
+              className={styles.input}
+              onChange={handleChange}
+          />
+          <label className={styles.label} htmlFor="health"> Health </label>
+          <input 
+              type='number'
+              id='health'
+              name="health"
+              value={state.health}
+              autoComplete="off"
+              min="1" max="100" step="1"
+              className={styles.input}
+              onChange={handleChange}
+          />
+          <label className={styles.label} htmlFor="image"> Image </label>
+          <input 
+              type='text'
+              id='image'
+              name="image"
+              value={state.img}
+              autoComplete="off"
+              className={styles.input}
+              onChange={handleChange}
+          />
+          <button type="submit" className={styles.button}> Crear </button>
+        </form> 
+    </>
   );
 };
