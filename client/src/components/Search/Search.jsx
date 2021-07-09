@@ -1,49 +1,40 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getRecipes } from '../../actions/actionsCreator';
 
 import styles from "./search.module.css";
 import { FaSearch } from 'react-icons/fa';
 
-function Search({ getRecipes }) {
-	const [input, setInput] = useState('');
+export default function Search() {
+	const [state, setState] = useState('');
+
+	const dispatch = useDispatch();
 
 	function handleChange(event){
-    	setInput(event.target.value);
+    	setState(event.target.value);
 	};
 
     function handleSubmit(event){
-    	event.preventDefault();
-    	if(input) {
-     		getRecipes(input);
+    	if(state.length > 4) {
+     		dispatch(getRecipes(state));
     	} else {
       		alert("Debes ingresar un ingrediente...");
     	};
-		setInput('');
+		setState('');
   	};
 
 	return (
 			<form className={styles.form}>
-			{/* <form onSubmit={handleSubmit}> */}
 				<input
 					type="text"
 					placeholder="Ingrediente..."
 					name="ingredient"
 					autoComplete="off"
 					className={styles.inp}
-					value={input}
+					value={state}
 					onChange={handleChange}
 				/>
-				{/* <button type="submit" className={styles.btn}> Search </button> */}
 				<span className={styles.btn} onClick={handleSubmit}> <FaSearch /> </span>
 			</form>
 		);
 };
-
-function mapStateToProps(state) {
-  return {
-    	countries: state.countries
-	};
-};
-
-export default connect(mapStateToProps, { getRecipes })(Search);
