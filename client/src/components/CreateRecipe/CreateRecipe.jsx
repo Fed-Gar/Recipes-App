@@ -79,7 +79,7 @@ export default function CreateRecipe() {
               type="text"
               id="title"
               name = "title"
-              minlength="4"
+              minLength="4"
               value={state.title}
               autoComplete="off"
               className={styles.input}
@@ -89,6 +89,7 @@ export default function CreateRecipe() {
           <textarea 
               id='summary' 
               name="summary" 
+              minLength="4"
               value={state.summary} 
               className={styles.textarea}
               onChange={handleChange}
