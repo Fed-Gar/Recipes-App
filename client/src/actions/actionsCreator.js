@@ -58,7 +58,6 @@ export function getTypes() {
   return function(dispatch) {
     return axios(`http://localhost:3001/types`)
       .then(response =>  {
-        console.log('RESPONSEEEE: ', response);
         dispatch({ type: GET_RECIPES_TYPES, payload: response.data });
       });
   };
