@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAME,
-        FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,
-        SET_PAGINATION, CREATE } from './actions';
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME,
+        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from './actions';
 
 const { BASE_URL, BASE_URL_TYPES } = process.env;
 
@@ -91,25 +90,11 @@ export function orderByScore(recipes, sort) {
   };
 };
 
-export function orderByType(types, sort) {
-  let sortScore = types.slice();
-  return function(dispatch) {
-      let result = order(sortScore, sort);
-      dispatch({type: ORDER_RECIPES_BY_TYPES, payload: result});
-  };
-};
-
 export function filterByType(filter) {
   return function(dispatch) {
     dispatch({type: FILTER_BY_TYPE, payload: filter});
   };
 }; 
-
-export function filterByPersonalization(filter) {
-  return function(dispatch) {
-    dispatch({type: FILTER_CREATED, payload: filter});
-  };
-};
 
 export function setPagination(payload) {
   return function(dispatch) {

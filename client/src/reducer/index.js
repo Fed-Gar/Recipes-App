@@ -1,12 +1,11 @@
-import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAME,
-        FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,
-        SET_PAGINATION, CREATE } from '../actions/actions';
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME,
+        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from '../actions/actions';
 
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
   recipesTypes: [],
-  filterByType: 'ALL',
+  filterByType: [],
   created: [],
   recipeDetail: {},
 };
@@ -44,11 +43,6 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipesLoaded: payload,
       };
-    case ORDER_RECIPES_BY_TYPES:
-      return {
-        ...state,
-        recipesLoaded: payload,
-      }  
     case SET_PAGINATION:
       return {
         ...state,
@@ -57,13 +51,8 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        filterByType: payload,
-      };   
-    case FILTER_CREATED:
-      return {
-        ...state,
-        filterByCreated: payload,
-      };   
+        filterByType: recipesLoaded.filter(),
+      }; 
     default:
       return state;    
   };
