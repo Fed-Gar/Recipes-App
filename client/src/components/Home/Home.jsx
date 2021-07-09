@@ -6,11 +6,12 @@ import Recipes from '../Recipes/Recipes';
 import styles from "./home.module.css";
 
 export default function Home() {
+  		
   return (
 		<div className={styles.homecont}>
 			<Nav />
 			<SearchBar />
 			<Recipes />
 		</div>
-	)
+	);
 };
