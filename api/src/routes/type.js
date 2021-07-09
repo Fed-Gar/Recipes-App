@@ -6,7 +6,26 @@ const { v4: uuidv4 } = require('uuid');
 const diets = ['Gluten Free', 'Ketogenic',' Vegetarian', 'Lacto-Vegetarian',
                 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Whole30'];
 
-let loaded = false;
+router.get('/', (_req, res, next) => {
+    diets.forEach(diet => {
+        Type.findOrCreate({
+            where: {
+                name: diet,
+            },
+            default: {
+                id: uuidv4(),
+                name: diet,   
+            },
+        })
+        .then(diet => {
+            const [_type, created] = diet;
+            if(created) console.log(`Se creo la dieta: ${diet[0].dataValues.name}`, diet);
+        })
+        .catch(error => next(error));
+    });
+    console.log('Dietas cargadas...');
+    res.status(200).json('OK');
+});              
 /*
  GET /types:
 Obtener todos los tipos de dieta posibles
@@ -36,19 +55,7 @@ deberán precargar la base de datos con los tipos de datos indicados por spoonac
 //     .catch(error => next(error));
 // });
 
-router.get('/', (_req, res, next) => {
-    console.log('ATRO');
-    diets.forEach(diet => {
-        Type.create({
-            id: uuidv4(),
-            name: diet,   
-        })
-    })
-    .then(diets => {
-        loaded = true;
-        console.log('Dietas creadas...')
-    })
-    .catch(error => next(error));
-});
-
 module.exports = router;
+// hacer uno que las cargue
+// otra que busque todas o por nombre(query)
+// dos diferentes a mismas rutas
