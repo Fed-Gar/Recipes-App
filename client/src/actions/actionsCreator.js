@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_RECIPES, GET_RECIPE_DETAIL, GET_RECIPES_TYPES, ORDER_RECIPES_BY_NAME,
         FILTER_BY_TYPE, FILTER_CREATED, ORDER_RECIPES_BY_SCORE, ORDER_RECIPES_BY_TYPES,
-        SET_PAGINATION, } from './actions';
+        SET_PAGINATION, CREATE } from './actions';
 
 const { BASE_URL, BASE_URL_TYPES } = process.env;
 
@@ -48,6 +48,15 @@ export function getTypes() {
     return axios(`${BASE_URL_TYPES}`)
       .then(data =>  {
         dispatch({ type: GET_RECIPES_TYPES, payload: data });
+      });
+  };
+};
+
+export function create() {
+  return function(dispatch) {
+    return axios(`${BASE_URL}`)
+      .then(data =>  {
+        dispatch({ type: CREATE, payload: data });
       });
   };
 };
