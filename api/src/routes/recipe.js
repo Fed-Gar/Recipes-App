@@ -64,7 +64,8 @@ router.get('/home', (req, res, next) => {
                 name: ingredient,
               },
   });
-  const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`);
+  // const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`);
+  const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}&number=${number}`);
   Promise.all([myRecipes, apiRecipes])
   .then(results => {
     const [my, api] = results;
