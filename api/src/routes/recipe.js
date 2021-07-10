@@ -9,6 +9,7 @@ let ID = 1;
 router.get('/', (req, res, next) => {
   // carga la DB
   const { number } = req.query;
+  const recipes = [];
   axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
   .then(response => {
     const { data } = response;
@@ -38,6 +39,9 @@ router.get('/', (req, res, next) => {
             created: false,
           },
         })
+        .then(res => {
+          recipes.push(res[0].dataValues);
+        })
         .catch(error => next(error));
       })
       .catch(error => next(error));
@@ -45,7 +49,7 @@ router.get('/', (req, res, next) => {
   })
   .catch(error => next(error)); 
   console.log('Recetas cargadas...');
-  res.status(200).send('Ok');
+  res.status(200).json(recipes);
 });
 //---------------------------------------------------------------------------------------------
 // router.get('/', (_req, res, next) => {
