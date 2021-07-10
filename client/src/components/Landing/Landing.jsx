@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { chargeRecipes } from '../../actions/actionsCreator';
 
 import styles from "./landing.module.css";
 import imgFood from '../../sources/arroz.jpg';
 
 export default function Landing() {
+    const dispatch = useDispatch();
+
+    useEffect(()=> {
+        dispatch(chargeRecipes());
+    }, []);
+
     return(
         <div className={styles.container}>
             <div className={styles.imgCont}>
