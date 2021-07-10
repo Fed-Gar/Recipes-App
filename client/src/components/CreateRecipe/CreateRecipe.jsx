@@ -34,6 +34,7 @@ export default function CreateRecipe() {
   const [state, setState] = useState({
     title:'',
     description:'',
+    type: '',
     img:'',
     place:'',
     date:'',
@@ -42,7 +43,7 @@ export default function CreateRecipe() {
   const [errors, setErrors] = useState({});
 
   const recipesTypes = useSelector(state => state.recipesTypes);
-  // o lo hago con el use efect o con esto ...(?
+  
   const dispatch = useDispatch();
 
   function handleChange(event) {
@@ -58,11 +59,11 @@ export default function CreateRecipe() {
   };
 
   function handleSubmit(event) {
-    event.preventDefault();
-    create(state);
+    dispatch(create(state));
     setState({
       title:'',
       summary:'',
+      type: '',
       img: '',
       score:'',
       health:'',
@@ -94,7 +95,18 @@ export default function CreateRecipe() {
               className={styles.textarea}
               onChange={handleChange}
           >
-          </textarea>  
+          </textarea> 
+          <label className={styles.label} htmlFor="filter"> Tipo de Dieta: </label>
+          <select name="filter" id="filter" onChange={handleChange}>
+            {
+              recipesTypes.map(type => {
+                if(type.name === 'vegan') {
+                  return <option value={type.name} key={type.id} selected> {type.name} </option>
+                }
+                return <option value={type.name} key={type.id} > {type.name} </option>
+              })
+            }
+			    </select> 
           <label className={styles.label} htmlFor="score"> Score </label>
           <input 
               type="number"
