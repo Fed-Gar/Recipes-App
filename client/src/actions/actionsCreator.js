@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES, 
-        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from './actions';
+        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES } from './actions';
 
 function order(data, sort) {
   if(sort === 'menor') {
@@ -34,9 +34,19 @@ function order(data, sort) {
   return data;
 };
 
-export function getRecipes() {
+export function chargeRecipes() {
   return function(dispatch) {
     return axios(`http://localhost:3001/recipes`)
+      .then(response => {
+        dispatch({ type: CHARGE_RECIPES, payload: response.data })
+      })
+      .catch((error) => console.error(error));
+  };
+};
+
+export function getRecipes() {
+  return function(dispatch) {
+    return axios(`http://localhost:3001/recipes/home`)
       .then(response => {
         dispatch({ type: GET_RECIPES, payload: response.data })
       })

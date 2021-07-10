@@ -1,9 +1,10 @@
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
-        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, } from '../actions/actions';
+        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES} from '../actions/actions';
 
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
+  recipesSearch: [],
   recipesTypes: [],
   filterByType: [],
   created: [],
@@ -12,11 +13,15 @@ const initialState = {
 
 export default function reducer(state = initialState, {type, payload}) {
   switch (type) {
+    case CHARGE_RECIPES:
+      return {
+        ...state,
+        recipesLoaded: payload,
+      };
     case GET_RECIPES:
       return {
         ...state,
-        recipes: payload.length,
-        recipesLoaded: payload,
+        recipesSearch: payload,
       };
     case GET_RECIPE_DETAIL:
       return {
