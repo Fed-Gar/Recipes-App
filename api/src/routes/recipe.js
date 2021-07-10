@@ -2,9 +2,9 @@ const { Router } = require('express');
 const router = Router();
 const { Recipe } = require('../db.js'); 
 const axios = require('axios');
-const { v4: uuidv4 } = require('uuid');
 
 const { BASE_URL, API_KEY } = process.env;
+let ID = 1;
 
 router.get('/', (req, res, next) => {
   // carga la DB
@@ -90,18 +90,15 @@ Debe traer solo los datos pedidos en la ruta de detalle de receta:
 */
 router.get('/:idReceta', (req, res, next) => {
   const { idReceta } = req.params;
-  // if(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(idReceta)) {
-  if(idReceta.length = 36) {
-      Recipe.findByPk(idReceta)
-      .then(recipe => { 
-        if(recipe) {
-          return res.status(200).json(recipe);
-        } else {
-            return res.status(200).json('La receta con ese ID no existe...');
-        };
-      })
-      .catch(error => next(error));
-  };
+  Recipe.findByPk(idReceta)
+  .then(recipe => { 
+    if(recipe) {
+      return res.status(200).json(recipe);
+    } else {
+        return res.status(200).json('La receta con ese ID no existe...');
+    };
+  })
+  .catch(error => next(error));
   axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
   .then(recipe => {
     const { data } = recipe;
@@ -129,8 +126,8 @@ Crea una receta en la base de datos
 */
 router.post('/', (req, res, next) => {
   const { name, summary, score, health, steps, img } = req.body;
-  const id = uuidv4();
-  // console.log('id: ', id);
+  const id = ID;
+  ID++;
   Recipe.findOrCreate({
     where: {name: name},
     defaults: {
@@ -141,6 +138,7 @@ router.post('/', (req, res, next) => {
       score,
       health,
       steps,
+      created: true,
     },
   })
   .then(data => {
