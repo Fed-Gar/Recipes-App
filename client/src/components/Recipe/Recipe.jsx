@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from "./recipe.module.css";
 
 export default function Recipe({ name, type, image, id }) {
-  const title = name.split(' ').splice(0, 4).join(' ') + '...';
+  const title = name.split(' ').splice(0, 3).join(' ') + '...';
   return (
     <div className={styles.contRecipe}>
       <Link to={`/detail/${id}`}>
