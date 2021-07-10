@@ -6,65 +6,70 @@ const { v4: uuidv4 } = require('uuid');
 
 const { BASE_URL, API_KEY } = process.env;
 
-// router.get('/', (req, res, next) => {
-//   // carga la DB
-//   const { number } = req.query;
-//   axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
-//   .then(response => {
-//     const { data } = response;
-//     data.results.forEach(recipe => {
-//       console.log('ATROOODEEEN');
-//       axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
-//       .then(response => {
-//         Recipe.findOrCreate({
-//           where: {
-//             id: response.id,
-//           },
-//           defaults: {
-//             id: response.id,
-//             name: response.title,
-//             summary: response.summary,
-//             img: response.image,
-//             score: response.spoonacularScore,
-//             health: response.healthScore,
-//             steps: response.analyzedInstructions[0].steps,
-//           },
-//         })
-//         console.log('Recetas cargadas...');
-//         res.status(200).text(ok);
-//       })
-//       .catch(error => (next));
-//     });
-//   })
-//   .catch(error => next(error)); 
-// });
-
-//---------------------------------------------------------------------------------------------
-router.get('/', (_req, res, next) => {
+router.get('/', (req, res, next) => {
   // carga la DB
-      Recipe.findAll()
-      .then(recipes => {
-        console.log('Recetas cargadas...');
-        res.status(200).json(recipes);
+  const { number } = req.query;
+  axios.get(`${BASE_URL}/complexSearch?${API_KEY}&number=${number}`)
+  .then(response => {
+    const { data } = response;
+    data.results.forEach(recipe => {
+      axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
+      .then(response => {
+        const { data } = response;
+        let steps = '';
+        if(data.analyzedInstructions.length > 0) {
+          let aux = data.analyzedInstructions[0].steps;
+          aux.forEach((data, i) => {
+            steps = steps + `${i + 1})` + data.step;
+          });
+        };
+        Recipe.findOrCreate({
+          where: {
+            id: data.id,
+          },
+          defaults: {
+            id: data.id,
+            name: data.title,
+            summary: data.summary,
+            img: data.image,
+            score: data.spoonacularScore,
+            health: data.healthScore,
+            steps: steps,
+            created: false,
+          },
+        })
+        .catch(error => next(error));
       })
-      .catch(error => (next));
+      .catch(error => next(error));
+    });
+  })
+  .catch(error => next(error)); 
+  console.log('Recetas cargadas...');
+  res.status(200).send('Ok');
 });
 //---------------------------------------------------------------------------------------------
-
-
+// router.get('/', (_req, res, next) => {
+//   // carga la DB
+//       Recipe.findAll()
+//       .then(recipes => {
+//         console.log('Recetas cargadas...');
+//         res.status(200).json(recipes);
+//       })
+//       .catch(error => (next));
+// });
+//---------------------------------------------------------------------------------------------
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
 Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/home', (req, res, next) => {
-  const { ingredient } = req.query;
+  const { ingredient, number } = req.query;
   const myRecipes = Recipe.findAll({
               where: {
                 name: ingredient,
               },
   });
-  // const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`);
   const apiRecipes = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}&number=${number}`);
   Promise.all([myRecipes, apiRecipes])
   .then(results => {
@@ -90,7 +95,6 @@ router.get('/:idReceta', (req, res, next) => {
       Recipe.findByPk(idReceta)
       .then(recipe => { 
         if(recipe) {
-          // console.log('AAAAAAAAAA1: ', recipe);
           return res.status(200).json(recipe);
         } else {
             return res.status(200).json('La receta con ese ID no existe...');
@@ -101,7 +105,6 @@ router.get('/:idReceta', (req, res, next) => {
   axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
   .then(recipe => {
     const { data } = recipe;
-    // console.log('AAAAAAAAAAAA: ', data);
     if(data.title) { 
       res.status(200).json({
         title: data.title,
