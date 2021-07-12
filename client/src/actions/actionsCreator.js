@@ -44,9 +44,9 @@ export function chargeRecipes() {
   };
 };
 
-export function getRecipes() {
+export function getRecipes(ingredient) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes/home`)
+    return axios(`http://localhost:3001/recipes?ingredient=${ingredient}`)
       .then(response => {
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
