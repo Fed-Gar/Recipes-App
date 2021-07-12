@@ -62,6 +62,7 @@ export default function reducer(state = initialState, {type, payload}) {
       return {
         ...state,
         recipesLoaded: state.recipesLoaded.filter(recipe => recipe.type !== payload.type),
+        recipesSearch: state.recipesSearch.filter(recipe => recipe.type !== payload.type),
       }; 
     default:
       return state;    
