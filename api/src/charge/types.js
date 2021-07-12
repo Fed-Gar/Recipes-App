@@ -6,14 +6,19 @@ const diets = ['gluten free', 'ketogenic', 'lacto-vegetarian','ovo-vegetarian',
 
 const chargeTypes = () => {
     diets.forEach(diet => {
-        Type.create({
-            id: uuidv4(),
-            name: diet,   
+        Type.findOrCreate({
+            where: {
+                name: diet,
+            },
+            default: {
+                id: uuidv4(),
+                name: diet,   
+            },
         })
         .then(diet => {
             console.log(`Se creo la dieta: ${diet.dataValues.name}`, diet);
         })
-        .catch(error => next(error));
+        .catch(error => console.log(error));
     });
 };
 

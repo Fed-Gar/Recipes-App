@@ -34,12 +34,12 @@ const chargeRecipes = (toEnter = 2) => {
             created: false,
           },
         })
-        .catch(error => next(error));
+        .catch(error => console.log(error));
       })
-      .catch(error => next(error));
+      .catch(error => console.log(error));
     });
   })
-  .catch(error => next(error)); 
+  .catch(error => console.log(error)); 
   console.log('Recetas cargadas...');
 };
 
