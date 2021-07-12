@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES, 
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES, RESET,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES } from './actions';
 
 function order(data, sort) {
@@ -61,6 +61,12 @@ export function getDetail(id) {
         dispatch({ type: GET_RECIPE_DETAIL, payload: data });
       })
       .catch((error) => console.error(error));
+  };
+};
+
+export function reset() {
+  return function(dispatch) {
+    dispatch({type: RESET});
   };
 };
 
