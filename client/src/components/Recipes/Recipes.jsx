@@ -11,12 +11,15 @@ export default function Recipes() {
   const dispatch = useDispatch();
 
   const recipesLoaded = useSelector(state => state.recipesLoaded);
+  const recipesSearch = useSelector(state => state.recipesSearch);
   const numPag = useSelector(state => state.numPag);
 
+  let search;
   const group = 6;
   let finalCount = numPag * group;
   let initialCount = finalCount - group;
   let recipes = recipesLoaded.slice(initialCount, finalCount);
+  if(recipesSearch.length > 0) search = recipesSearch.slice(initialCount, finalCount);
 
   useEffect(()=> {
         dispatch(chargeRecipes());
@@ -28,15 +31,26 @@ export default function Recipes() {
       return (
         <div className={styles.contRecipes}>
           {
-            recipes.map(recipe => { 
-              return (
+          search && search.length > 0 ? 
+              search.map(recipe => {
+                return (
                   <Recipe key={recipe.id}
                     id={recipe.id}
-                    name={recipe.name}
-                    image={recipe.img}
-                    type={recipe.type}
+                    name={recipe.title}
+                    image={recipe.image}
                   />
-              );
+                )
+              })
+              :
+              recipes.map(recipe => { 
+                return (
+                    <Recipe key={recipe.id}
+                      id={recipe.id}
+                      name={recipe.name}
+                      image={recipe.img}
+                      type={recipe.type}
+                    />
+                );
             })
           }
         </div>
