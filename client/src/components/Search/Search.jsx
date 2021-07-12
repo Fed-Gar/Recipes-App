@@ -14,7 +14,8 @@ export default function Search() {
     	setState(event.target.value);
 	};
 
-    function handleSubmit(event){
+    function handleSubmit(event) {
+		event.preventDefault();
     	if(state.length > 3) {
      		dispatch(getRecipes(state));
     	} else {

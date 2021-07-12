@@ -5,7 +5,6 @@ import { orderByName, orderByScore } from '../../actions/actionsCreator';
 import styles from "./ordering.module.css";
 
 export default function Ordering() {
-// ordenamiento por orden alfabético y puntuacián
   const dispatch = useDispatch();
 
   const recipesLoaded = useSelector(state => state.recipesLoaded);
