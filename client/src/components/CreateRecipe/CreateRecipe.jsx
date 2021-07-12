@@ -101,7 +101,7 @@ export default function CreateRecipe() {
             {
               recipesTypes.map(type => {
                 if(type.name === 'vegan') {
-                  return <option value={type.name} key={type.id} selected> {type.name} </option>
+                  return <option value={type.name} key={type.id} > {type.name} </option>
                 }
                 return <option value={type.name} key={type.id} > {type.name} </option>
               })
