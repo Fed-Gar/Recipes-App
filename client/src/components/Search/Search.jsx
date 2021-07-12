@@ -15,7 +15,7 @@ export default function Search() {
 	};
 
     function handleSubmit(event){
-    	if(state.length > 4) {
+    	if(state.length > 3) {
      		dispatch(getRecipes(state));
     	} else {
       		alert("Debes ingresar un ingrediente...");
