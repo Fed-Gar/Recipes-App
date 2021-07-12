@@ -6,14 +6,6 @@ const axios = require('axios');
 const { BASE_URL, API_KEY } = process.env;
 let ID = 1;
 
-router.get('/', (_req, res, next) => {
-  Recipe.findAll()
-  .then(recipes => {
-    console.log('Recetas cargadas...');
-    res.status(200).json(recipes);
-  })
-  .catch(error => (next));
-});
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
@@ -21,16 +13,24 @@ Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/', (req, res, next) => {
   const { ingredient } = req.query;
-  axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`)
-  .then(api => {
-    const { results } = api.data; 
-    if(results.length > 0) {
-      results.splice(9);
-      return res.status(200).json(results);
-    }
-    res.status(200).json('No hay recetas...');   
+  if(!ingredient) {
+    Recipe.findAll()
+    .then(recipes => {
+      res.status(200).json(recipes);
   })
-  .catch(error => next(error));
+    .catch(error => next(error));
+  } else {
+      axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`)
+      .then(api => {
+        const { results } = api.data; 
+        if(results.length > 0) {
+          results.splice(9);
+          return res.status(200).json(results);
+        }
+        res.status(200).json('No hay recetas...');   
+      })
+      .catch(error => next(error));
+  };
 });
 /*
 GET /recipes/{idReceta}:
