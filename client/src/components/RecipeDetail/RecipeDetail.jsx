@@ -5,13 +5,12 @@ import { getDetail } from '../../actions/actionsCreator';
 import Nav from '../Nav/Nav';
 
 import styles from "./recipeDetail.module.css";
+import notImage from '../../sources/no-image.jpg';
 
 export default function RecipeDetail({match}) {
   const dispatch = useDispatch();
 
   const { data } = useSelector(state => state.recipeDetail);
-
-  console.log(data)
 
   useEffect(()=> {
     const { id } = match.params;
@@ -27,24 +26,24 @@ export default function RecipeDetail({match}) {
           <div className={styles.container}>
             <div className={styles.header}> 
               <div className={styles.info}>
+                <h3> Receta: </h3>
                 <h3> { data.name } </h3>
+                <h3> Puntuación: </h3>
                 <span> { data.score } </span>
+                <h3> Nivel de comida saludable: </h3>
                 <span>   { data.health } </span>
               </div>
-              <div className={styles.img}> 
-                <img src={ data.img } alt={`Imagen ilustratiba del plato ${ data.name }`} />
-              </div>
+              <img src={ data.img || notImage } alt={`Imagen ilustratiba del plato ${ data.name }`} />
             </div>
             <div className={styles.detail}> 
-              <p> { data.summary } </p>
-              <p> { data.steps } </p>
+              <h4> Sumario: </h4>
+              <p> { data.summary.length > 0 ? data.summary : 'No hay más detalles...' } </p>
+              <br />
+              <h4> Paso a paso: </h4>
+              <p> { data.steps.length > 0 ? data.steps : 'Sin detalles...' } </p>
             </div>
         </div>
       </>
     );
   };
 };
-
-// 716426
-// 715594
-// 1
