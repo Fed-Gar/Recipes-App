@@ -13,8 +13,13 @@ export default function Pagination() {
   const dispatch = useDispatch();
 
   const recipes = useSelector(state => state.recipesLoaded);
+  const search = useSelector(state => state.recipesSearch);
+  let max;
 
-  const max = Math.ceil(recipes.length / 6);
+  if(search.length > 0) max = Math.ceil(search.length / 6);
+  else {
+    max = Math.ceil(recipes.length / 6);
+  };
 
   const handlePrev = e => {
 	if(numPag > 1) setNumPage(numPag - 1);
