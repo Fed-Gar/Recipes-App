@@ -5,21 +5,21 @@ const diets = ['gluten free', 'ketogenic', 'lacto-vegetarian','ovo-vegetarian',
                 'paleo', 'pescetarian', 'primal', 'vegan', 'vegetarian', 'whole30'];
 
 const chargeTypes = () => {
-    diets.forEach(diet => {
-        Type.findOrCreate({
-            where: {
-                name: diet,
-            },
-            default: {
-                id: uuidv4(),
-                name: diet,   
-            },
-        })
-        .then(diet => {
-            console.log(`Se creo la dieta: ${diet.dataValues.name}`, diet);
-        })
-        .catch(error => console.log(error));
-    });
+    Type.findAll()
+    .then(response => {
+        if(response.length < 1) {
+            diets.forEach(diet => {
+                Type.create({
+                    id: uuidv4(),
+                    name: diet,     
+                })
+            .then(data => {
+                console.log(`Se creo la dieta: ${data.dataValues.name}`, data);
+            })
+            .catch(error => console.log(error));
+            }); 
+        }
+    })
 };
 
 module.exports = chargeTypes;
