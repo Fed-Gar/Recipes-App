@@ -2,15 +2,16 @@ const { Router } = require('express');
 const router = Router();
 const { Recipe } = require('../db.js'); 
 const axios = require('axios');
+const { v4: uuidv4 } = require('uuid'); 
 
 const { BASE_URL, API_KEY } = process.env;
-let ID = 1;
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
 Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/', (req, res, next) => {
+  // cambiar a prromise all
   const { ingredient } = req.query;
   if(!ingredient) {
     Recipe.findAll()
@@ -38,32 +39,37 @@ Debe traer solo los datos pedidos en la ruta de detalle de receta:
 */
 router.get('/:idReceta', (req, res, next) => {
   const { idReceta } = req.params;
-  Recipe.findByPk(idReceta)
-  .then(recipe => { 
-    if(recipe) {
-      return res.status(200).json(recipe);
+  const db = Recipe.findByPk(idReceta);
+  const api = axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`);
+  Promise.all([db, api])
+  .then(data => {
+    const [ db, api ] = data;
+    if(db) {
+      return res.status(200).json(db);
     } else {
-        return res.status(200).json('La receta con ese ID no existe...');
-    };
-  })
-  .catch(error => next(error));
-  axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
-  .then(recipe => {
-    const { data } = recipe;
-    if(data.title) { 
-      res.status(200).json({
-        title: data.title,
-        image: data.image,
-        score: data.spoonacularScore,
-        health: data.healthScore,
-        summary: data.summary,
-        typeDish: data.dishTypes,
-        typeDiet: data.diets,
-        steps: data.analyzedInstructions[0].steps,
-      });
-    } else {
-        res.status(200).json('La receta con ese ID no existe...');
-    };
+        if(api.data.title) {
+          const { data } = api;
+          let steps = '';
+          if(data.analyzedInstructions.length > 0) {
+            let aux = data.analyzedInstructions[0].steps;
+            aux.forEach((data, i) => {
+              steps = steps + `${i + 1})` + data.step;
+            });
+          }; 
+          res.status(200).json({
+            title: data.title,
+            image: data.image,
+            score: data.spoonacularScore,
+            health: data.healthScore,
+            summary: data.summary,
+            typeDish: data.dishTypes,
+            typeDiet: data.diets,
+            steps: steps,
+          });
+        } else {
+            res.status(200).json('No existe esa receta...');
+        };
+      };
   })
   .catch(error => next(error));
 });
@@ -74,19 +80,16 @@ Crea una receta en la base de datos
 */
 router.post('/', (req, res, next) => {
   const { name, summary, score, health, steps, img } = req.body;
-  const id = ID;
-  ID++;
   Recipe.findOrCreate({
     where: {name: name},
     defaults: {
-      id: id,
+      id: uuidv4(),
       name,
       img,
       summary,
       score,
       health,
       steps,
-      created: true,
     },
   })
   .then(data => {
