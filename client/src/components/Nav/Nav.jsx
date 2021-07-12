@@ -15,7 +15,7 @@ export default function Nav() {
   };
 
   return (
-    <header className={styles.navBar}>
+    <div className={styles.navBar}>
         <nav>
             <div className={styles.links}>
               <Link to="/">
@@ -27,6 +27,6 @@ export default function Nav() {
               <Link to="/create" > Crear Receta </Link>
             </div>
         </nav>
-    </header>
+    </div>
   );
 };

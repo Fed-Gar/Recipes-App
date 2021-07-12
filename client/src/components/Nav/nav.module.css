@@ -6,6 +6,7 @@
     
     background-color:var(--color-4);
     box-shadow: var(--shad-1);
+    padding: .5em;
 }
 
 nav {
@@ -20,6 +21,7 @@ nav {
     height: 2.2em;
 
     margin-top: .2em;
+    margin-left: .6em;
 
     border-radius: 50%;
 }
