@@ -5,7 +5,6 @@ const axios = require('axios');
 
 const { BASE_URL, API_KEY } = process.env;
 let ID = 1;
-
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
