@@ -5,32 +5,42 @@ const axios = require('axios');
 const { v4: uuidv4 } = require('uuid'); 
 
 const { BASE_URL, API_KEY } = process.env;
+
+var UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 /*
 GET /recipes?name="...":
 Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
 Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/', (req, res, next) => {
-  // cambiar a prromise all
-  const { ingredient } = req.query;
+  const { ingredient, toGet } = req.query;
   if(!ingredient) {
-    Recipe.findAll()
-    .then(recipes => {
-      res.status(200).json(recipes);
-  })
+    const db = Recipe.findAll();
+    const api = axios.get(`${BASE_URL}/complexSearch?number=${toGet}&${API_KEY}`);
+    Promise.all([db, api])
+    .then(data => {
+      // const [ db, api ] = data;
+      console.log('DATA: ', data);
+      return res.status(200).json(data);
+    })
     .catch(error => next(error));
   } else {
-      axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`)
-      .then(api => {
-        const { results } = api.data; 
+      const db = Recipe.findAll({where: { name: ingredient}});
+      const api = axios.get(`${BASE_URL}/complexSearch?query=${ingredient}&${API_KEY}`);
+      Promise.all([db, api])
+      .then(data => {
+        const [ db, api ] = data;
+        console.log('API: ', api.data.results);
+        console.log('DB: ', db);
+        const results = [...db, ...api.data.results];
         if(results.length > 0) {
           results.splice(9);
           return res.status(200).json(results);
-        }
-        res.status(200).json('No hay recetas...');   
+        };
+        res.status(200).json('No hay recetas...');
       })
       .catch(error => next(error));
-  };
+    };
 });
 /*
 GET /recipes/{idReceta}:
@@ -39,14 +49,15 @@ Debe traer solo los datos pedidos en la ruta de detalle de receta:
 */
 router.get('/:idReceta', (req, res, next) => {
   const { idReceta } = req.params;
-  const db = Recipe.findByPk(idReceta);
-  const api = axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`);
-  Promise.all([db, api])
-  .then(data => {
-    const [ db, api ] = data;
-    if(db) {
+  if(UUID.test(idReceta)) {
+    Recipe.findByPk(idReceta)
+    .then(db => {
       return res.status(200).json(db);
-    } else {
+    })
+    .catch(error => next(error));
+  } else {
+      axios.get(`${BASE_URL}/${idReceta}/information?${API_KEY}`)
+      .then(api => {
         if(api.data.title) {
           const { data } = api;
           let steps = '';
@@ -56,7 +67,7 @@ router.get('/:idReceta', (req, res, next) => {
               steps = steps + `${i + 1})` + data.step;
             });
           }; 
-          res.status(200).json({
+          const recipe = {
             title: data.title,
             image: data.image,
             score: data.spoonacularScore,
@@ -65,13 +76,12 @@ router.get('/:idReceta', (req, res, next) => {
             typeDish: data.dishTypes,
             typeDiet: data.diets,
             steps: steps,
-          });
-        } else {
-            res.status(200).json('No existe esa receta...');
-        };
-      };
-  })
-  .catch(error => next(error));
+          };
+          return res.status(200).json(recipe);
+        }; 
+      })
+      .catch(error => next(error));
+    }; 
 });
 /*
 POST /recipe:
@@ -93,6 +103,7 @@ router.post('/', (req, res, next) => {
     },
   })
   .then(data => {
+    console.log('ID: ', data); // f24cbe9f-6171-40a9-b478-079a309aa1d5
     const [_recipe, created] = data;
     if(created) return res.status(200).json('Receta creada con exito...');
     return res.status(200).json('La receta ya existe...');

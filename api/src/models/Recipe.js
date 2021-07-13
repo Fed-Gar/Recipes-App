@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     'recipe', 
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.UUID,
           primaryKey: true,
           allowNull: false,
         },
@@ -33,10 +33,6 @@ module.exports = (sequelize) => {
         },
         steps: {
           type: DataTypes.TEXT,
-        },
-        created: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
         },
     });
 };
