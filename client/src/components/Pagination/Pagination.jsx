@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPagination } from '../../actions/actionsCreator';
 
 import styles from "./pagination.module.css";
-// import { HiOutlineArrowCircleLeft } from 'react-icons/fa';
-// import { HiOutlineArrowCircleRight } from '@react-icons/all-files/fa/FaBeer';
+import { BiArrowToLeft } from "react-icons/bi";
+import { BiArrowToRight } from "react-icons/bi";
 
 export default function Pagination() {
   const [numPag, setNumPage] = useState(1);
@@ -37,11 +37,9 @@ export default function Pagination() {
     <div className={styles.pagCont}>
 			<p> Páginas </p>
 			<div className={styles.pag}>
-			  {/* <button onClick={ handlePrev }> <HiOutlineArrowCircleLeft/> </button> */}
-			  <button onClick={ handlePrev }> izq </button>
+			  <BiArrowToLeft className={styles.arrow} onClick={ handlePrev } />
 				<span> { numPag } </span>
-			  {/* <button onClick={ handlePrev }> <HiOutlineArrowCircleRight/> </button> */}
-				<button onClick={ handleNext }> der </button>
+			  <BiArrowToRight className={styles.arrow} onClick={ handleNext } />
 			</div>
 		</div>
   );
