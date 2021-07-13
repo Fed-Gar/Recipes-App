@@ -13,15 +13,30 @@ Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada 
 Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/', (req, res, next) => {
-  const { ingredient, toGet } = req.query;
+  const { ingredient, toget } = req.query;
   if(!ingredient) {
     const db = Recipe.findAll();
-    const api = axios.get(`${BASE_URL}/complexSearch?number=${toGet}&${API_KEY}`);
+    const api = axios.get(`${BASE_URL}/complexSearch?number=${toget}&${API_KEY}`);
     Promise.all([db, api])
     .then(data => {
-      // const [ db, api ] = data;
-      console.log('DATA: ', data);
-      return res.status(200).json(data);
+      const [ db, api ] = data;
+      const apiRes = [];
+      if(api.data.results.length > 0) {
+        api.data.results.forEach(recipe => {
+          axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
+          .then(api => {
+            const { data } = api;
+            apiRes.push({
+              name: data.title,
+              img: data.image,
+              typeDiet: data.diets,
+            });
+          })
+          .catch(error => next(error));
+        });
+      };
+      const results = [...db, ...apiRes];
+      return res.status(200).json(results);
     })
     .catch(error => next(error));
   } else {
@@ -30,8 +45,6 @@ router.get('/', (req, res, next) => {
       Promise.all([db, api])
       .then(data => {
         const [ db, api ] = data;
-        console.log('API: ', api.data.results);
-        console.log('DB: ', db);
         const results = [...db, ...api.data.results];
         if(results.length > 0) {
           results.splice(9);
