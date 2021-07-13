@@ -1,15 +1,15 @@
 const { Router } = require('express');
 const router = Router();
-const { Recipe } = require('../db.js'); 
 const axios = require('axios');
+const { Recipe } = require('../db.js'); 
 const { v4: uuidv4 } = require('uuid'); 
 
 const { BASE_URL, API_KEY } = process.env;
 
-var UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 /*
 GET /recipes?name="...":
-Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter
+Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter.
 Si no existe ninguna receta mostrar un mensaje adecuado
 */
 router.get('/', (req, res, next) => {
@@ -19,24 +19,28 @@ router.get('/', (req, res, next) => {
     const api = axios.get(`${BASE_URL}/complexSearch?number=${toget}&${API_KEY}`);
     Promise.all([db, api])
     .then(data => {
-      const [ db, api ] = data;
-      const apiRes = [];
-      if(api.data.results.length > 0) {
-        api.data.results.forEach(recipe => {
+      let [ db, api ] = data;
+      const tot = api.data.results.length;
+      if(tot > 0) {
+        api.data.results.forEach((recipe, i) => {
           axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
           .then(api => {
-            const { data } = api;
-            apiRes.push({
-              name: data.title,
-              img: data.image,
-              typeDiet: data.diets,
-            });
+            const aux = {
+              name: api.data.title,
+              img: api.data.image,
+              typeDiet: api.data.diets,
+            };
+            db.push(aux);
+            if(i === (tot - 1)) {
+              if(db.length > 0) {
+                return res.status(200).json(db);
+              };
+              res.status(200).json('No hay recetas...');
+            }
           })
           .catch(error => next(error));
         });
       };
-      const results = [...db, ...apiRes];
-      return res.status(200).json(results);
     })
     .catch(error => next(error));
   } else {
