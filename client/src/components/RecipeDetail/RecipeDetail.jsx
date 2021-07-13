@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDetail } from '../../actions/actionsCreator';
 
 import Nav from '../Nav/Nav';
+import Loading from '../Loading/Loading';
 
 import styles from "./recipeDetail.module.css";
 import notImage from '../../sources/no-image.jpg';
@@ -18,7 +19,7 @@ export default function RecipeDetail({match}) {
   }, []);
 
   if(!data) {
-    return <h3> Cargando... </h3>
+    return <Loading />
   } else {
       return (
         <>
