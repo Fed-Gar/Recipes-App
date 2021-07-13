@@ -35,14 +35,18 @@
     justify-content: space-around;
 }
 
-.pag button {
-    font-size: 1.2rem;
+.arrow {
+    font-size: 1.6rem;
 
     background-color: var(--color-4);
     color: var(--color-2);
+
+    cursor: pointer;
 }
 
-.pag button:hover {
-    cursor: pointer;
+.arrow:hover {
+    transform: scale(1.2);
+
     color: var(--color-3);
+    font-weight: bold;
 }
