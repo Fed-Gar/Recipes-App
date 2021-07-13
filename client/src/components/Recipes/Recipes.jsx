@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { chargeRecipes } from '../../actions/actionsCreator';
+import Loading from '../Loading/Loading';
 
 import Recipe from '../Recipe/Recipe';   
+
+import { chargeRecipes } from '../../actions/actionsCreator';
 
 import styles from "./recipes.module.css"; 
 
@@ -26,7 +28,7 @@ export default function Recipes() {
   }, []);
 
   if(recipes.length < 1) {
-    return <div className={styles.loading}> Cargando... </div>
+    return <div className={styles.loading}> <Loading /> </div>
   } else {
       return (
         <div className={styles.contRecipes}>
