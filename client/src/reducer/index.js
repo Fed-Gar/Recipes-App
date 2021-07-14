@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES, RESET,
+import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES} from '../actions/actions';
 
 const initialState = {
@@ -26,11 +26,6 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipeDetail: payload,
       };
-    case RESET:
-      return {
-        ...state,
-        recipesSearch: [],
-      };  
     case GET_RECIPES_TYPES:
       return {
         ...state,

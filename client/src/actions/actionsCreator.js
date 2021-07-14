@@ -73,12 +73,14 @@ export function getTypes() {
   };
 };
 
-export function create() {
+export function create(data) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes`)
-      .then(data =>  {
-        dispatch({ type: CREATE, payload: data });
-      });
+    return axios.post(`http://localhost:3001/recipes`, data)
+      .then(response => {
+        console.log('POST: ', data);
+        dispatch({ type: CREATE, payload: response });
+      })
+      .catch(error => console.log(error));
   };
 };
 
