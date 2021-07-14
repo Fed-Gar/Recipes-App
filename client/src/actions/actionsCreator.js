@@ -34,9 +34,9 @@ function order(data, sort) {
   return data;
 };
 
-export function chargeRecipes() {
+export function chargeRecipes(toget = 1) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes`)
+    return axios(`http://localhost:3001/recipes?toget=${toget}`)
       .then(response => {
         dispatch({ type: CHARGE_RECIPES, payload: response.data })
       })
@@ -44,9 +44,9 @@ export function chargeRecipes() {
   };
 };
 
-export function getRecipes(ingredient) {
+export function getRecipes(name) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes?ingredient=${ingredient}`)
+    return axios(`http://localhost:3001/recipes?name=${name}`)
       .then(response => {
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
