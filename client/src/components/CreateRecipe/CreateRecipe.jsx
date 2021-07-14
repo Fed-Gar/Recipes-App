@@ -11,10 +11,10 @@ const URL = new RegExp("^(http|https)://", "i");
 
 export function validate(state) {
   let errors = {};
-  if(!state.title) {
-    errors.title = 'Tienes que ingresar un título...';
-  } else if (state.title.length < 4) {
-      errors.title = 'El título es inválido.';
+  if(!state.name) {
+    errors.name = 'Tienes que ingresar un título...';
+  } else if (state.name.length < 4) {
+      errors.name = 'El título es inválido.';
   };
   if(!state.summary) {
     errors.summary = 'Tienes que ingresar un resumen...';
@@ -33,16 +33,17 @@ export default function CreateRecipe() {
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
-    title:'',
+    name:'',
     summary:'',
     img:'',
     type: [],
     score:'',
+    steps: '',
     health:'',
   });
 
   const [errors, setErrors] = useState({
-    title: '',
+    name: '',
     summary: '',
     img: '',
   });
@@ -65,15 +66,16 @@ export default function CreateRecipe() {
     event.preventDefault();
     dispatch(create(state));
     setState({
-      title:'',
+      name:'',
       summary:'',
       img: '',
       type: [],
       score:'',
+      steps: '',
       health:'',
     });
     setErrors({
-      title: '',
+      name: '',
       summary: '',
       img: '',
     });
@@ -83,17 +85,17 @@ export default function CreateRecipe() {
     <>
       <Nav />
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label} htmlFor="title" > Título: </label>
+          <label className={styles.label} htmlFor="name" > Título: </label>
           <input
               type="text"
-              id="title"
-              name = "title"
-              value={state.title}
+              id="name"
+              name = "name"
+              value={state.name}
               autoComplete="off"
               className={styles.input}
               onChange={handleChange}
           />
-          {errors.title && (<p className={styles.danger}> {errors.title} </p>)}
+          {errors.name && (<p className={styles.danger}> {errors.name} </p>)}
           <label className={styles.label} htmlFor="summary"> Resumen: </label>
           <textarea 
               id='summary' 
@@ -137,6 +139,15 @@ export default function CreateRecipe() {
               className={styles.input}
               onChange={handleChange}
           />
+          <label className={styles.label} htmlFor="steps"> Paso a paso: </label>
+          <textarea 
+              id='steps' 
+              name="steps" 
+              value={state.steps} 
+              className={styles.textarea}
+              onChange={handleChange}
+          >
+          </textarea> 
           <label className={styles.label} htmlFor="img" > Imagen: </label>
           <input
               type="url"
@@ -149,8 +160,8 @@ export default function CreateRecipe() {
               onChange={handleChange}
           />
           {errors.img && (<p className={styles.danger}> {errors.img} </p>)}
-          {((!errors.title && !errors.summary && !errors.img) 
-            && (errors.title !== '' && errors.summary !== '' && errors.img !== '')) ? 
+          {((!errors.name && !errors.summary && !errors.img) 
+            && (errors.name !== '' && errors.summary !== '' && errors.img !== '')) ? 
             (<button type="submit" className={styles.button}> Crear </button>) 
             : 
             <button type="submit" className={styles.disabled} disabled> Crear </button>}
