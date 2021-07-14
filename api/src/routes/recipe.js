@@ -29,6 +29,7 @@ router.get('/', (req, res, next) => {
               id: api.data.id,
               name: api.data.title,
               img: api.data.image,
+              score: api.data.spoonacularScore,
               typeDiet: api.data.diets,
             };
             db.push(aux);
