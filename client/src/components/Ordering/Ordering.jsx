@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { orderByName, orderByScore } from '../../actions/actionsCreator';
+import { orderByName, orderByScore, chargeRecipes } from '../../actions/actionsCreator';
 
 import styles from "./ordering.module.css";
 
@@ -11,6 +11,7 @@ export default function Ordering() {
 
   const handleChange = e => {
     const { value } = e.target;
+	if(value === 'default') dispatch(chargeRecipes());
 	if(value === 'aZ' || value === 'zA') dispatch(orderByName(recipesLoaded, value)); 
 	if(value === 'menor' || value === 'mayor') dispatch(orderByScore(recipesLoaded, value)); 
   }; 
@@ -22,7 +23,7 @@ export default function Ordering() {
 				name="order" 
 				id="order" 
 				onChange={handleChange}>
-					<option value="default"> ---------------------- </option>
+					<option value="default"> Default </option>
 					<optgroup label="Nombre">
 						<option value="aZ"> A - Z </option>
 						<option value="zA"> Z - A </option>
