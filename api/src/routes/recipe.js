@@ -8,9 +8,7 @@ const { BASE_URL, API_KEY } = process.env;
 
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 /*
-GET /recipes?name="...":
-Obtener un listado de las primeras 9 recetas que contengan la palabra ingresada como query parameter.
-Si no existe ninguna receta mostrar un mensaje adecuado
+GET /recipes?name="..."
 */
 router.get('/', (req, res, next) => {
   const { name, toget } = req.query;
@@ -62,9 +60,7 @@ router.get('/', (req, res, next) => {
     };
 });
 /*
-GET /recipes/{idReceta}:
-Obtener el detalle de una receta en particular
-Debe traer solo los datos pedidos en la ruta de detalle de receta:
+GET /recipes/{idReceta}
 */
 router.get('/:idReceta', (req, res, next) => {
   const { idReceta } = req.params;
@@ -103,9 +99,25 @@ router.get('/:idReceta', (req, res, next) => {
     }; 
 });
 /*
-POST /recipe:
-Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
-Crea una receta en la base de datos
+GET /recipes/type?type="..."
+*/
+router.get('/type', (req, res, next) => {
+  const { diet, toget } = req.query;
+  const db = Recipe.findAll(); // buscar por la dieta
+  const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&${API_KEY}`);
+  Promise.all([db, api])
+  .then(data => {
+    const [ db, api ] = data;
+    const results = [...db, ...api.data.results];
+    if(results.length > 0) {
+      return res.status(200).json(results);
+    };
+    res.status(200).json('No hay recetas...');
+  })
+  .catch(error => next(error));
+});
+/*
+POST /recipe
 */
 router.post('/', (req, res, next) => {
   const { name, summary, score, health, steps, img } = req.body;
