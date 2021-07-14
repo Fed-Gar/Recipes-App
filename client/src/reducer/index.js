@@ -4,9 +4,7 @@ import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPE
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
-  recipesSearch: [],
   recipesTypes: [],
-  filterByType: [],
   created: [],
   recipeDetail: {},
 };
@@ -61,8 +59,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        recipesLoaded: state.recipesLoaded.filter(recipe => recipe.type !== payload.type),
-        recipesSearch: state.recipesSearch.filter(recipe => recipe.type !== payload.type),
+        recipesLoaded: payload,
       }; 
     default:
       return state;    

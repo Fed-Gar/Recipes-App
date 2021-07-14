@@ -97,7 +97,6 @@ export function orderByName(recipes, sort) {
 };
 
 export function orderByScore(recipes, sort) {
-  console.log('RECIPES: ', recipes)
   let sortScore = recipes.slice(); // hace una copia
   return function(dispatch) {
       let result = order(sortScore, sort);
@@ -105,9 +104,12 @@ export function orderByScore(recipes, sort) {
   };
 };
 
-export function filterByType(type) {
+export function filterByType(diet, toget = 1) {
   return function(dispatch) {
-    dispatch({type: FILTER_BY_TYPE, payload: type});
+    return axios(`http://localhost:3001/recipes/type?diet=${diet}&toget=${toget}`)
+      .then(data =>  {  
+        dispatch({type: FILTER_BY_TYPE, payload: type});
+      });
   };
 }; 
 
