@@ -77,7 +77,7 @@ export function create(data) {
   return function(dispatch) {
     return axios.post(`http://localhost:3001/recipes`, data)
       .then(response => {
-        console.log('POST: ', data);
+        console.log('POST: ', response);
         dispatch({ type: CREATE, payload: response });
       })
       .catch(error => console.log(error));
