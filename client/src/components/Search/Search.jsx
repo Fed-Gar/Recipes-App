@@ -25,17 +25,17 @@ export default function Search() {
   	};
 
 	return (
-			<form className={styles.form}>
-				<input
-					type="text"
-					placeholder="Ingrediente..."
-					name="ingredient"
-					autoComplete="off"
-					className={styles.inp}
-					value={state}
-					onChange={handleChange}
-				/>
-				<span className={styles.btn} onClick={handleSubmit}> <FaSearch /> </span>
-			</form>
-		);
+		<form className={styles.form}>
+			<input
+				type="text"
+				placeholder="Nombre..."
+				name="ingredient"
+				autoComplete="off"
+				className={styles.inp}
+				value={state}
+				onChange={handleChange}
+			/>
+			<span className={styles.btn} onClick={handleSubmit}> <FaSearch /> </span>
+		</form>
+	);
 };
