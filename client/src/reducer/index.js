@@ -21,7 +21,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case GET_RECIPES:
       return {
         ...state,
-        recipesSearch: payload,
+        recipesLoaded: payload,
       };
     case GET_RECIPE_DETAIL:
       return {

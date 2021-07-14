@@ -97,7 +97,8 @@ export function orderByName(recipes, sort) {
 };
 
 export function orderByScore(recipes, sort) {
-  let sortScore = recipes.slice();
+  console.log('RECIPES: ', recipes)
+  let sortScore = recipes.slice(); // hace una copia
   return function(dispatch) {
       let result = order(sortScore, sort);
       dispatch({type: ORDER_RECIPES_BY_SCORE, payload: result});
