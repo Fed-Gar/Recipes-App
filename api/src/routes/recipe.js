@@ -46,7 +46,7 @@ router.get('/', (req, res, next) => {
     .catch(error => next(error));
   } else {
       const db = Recipe.findAll({where: { name: name }});
-      const api = axios.get(`${BASE_URL}/complexSearch?query=${ name }&${API_KEY}`);
+      const api = axios.get(`${BASE_URL}/complexSearch?query=${name}&${API_KEY}`);
       Promise.all([db, api])
       .then(data => {
         const [ db, api ] = data;
@@ -86,7 +86,7 @@ router.get('/:idReceta', (req, res, next) => {
             });
           }; 
           const recipe = {
-            title: data.title,
+            name: data.title,
             image: data.image,
             score: data.spoonacularScore,
             health: data.healthScore,
