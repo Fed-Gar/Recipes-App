@@ -30,9 +30,11 @@ export default function RecipeDetail() {
             <div className={styles.header}> 
               <div className={styles.info}>
                 <h3> Receta: </h3>
-                <h3> { data.name } </h3>
+                <span> { data.name } </span>
+                <hr />
                 <h3> Puntuación: </h3>
                 <span> { data.score } </span>
+                <hr />
                 <h3> Nivel de comida saludable: </h3>
                 <span>   { data.health } </span>
               </div>

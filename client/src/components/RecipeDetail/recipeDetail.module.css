@@ -52,10 +52,19 @@ img {
     align-items: center;
     justify-content: center;
 
-    padding: 1em;
+    padding: 2.2em;
 
     background-color: var(--color-4);
     box-shadow: var(--shad-1);
+    border-radius: var(--rad);
+}
+
+hr {
+    width: 80%;
+
+    margin: .5em 0;
+
+    border: 2px solid var(--color-2);
     border-radius: var(--rad);
 }
 
@@ -71,13 +80,13 @@ img {
 }
 
 h3 {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: var(--color-2);
     font-weight: bold;
 }
 
 span {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: var(--color-2);
     font-weight: bold;
 }
@@ -94,5 +103,16 @@ span {
 .detail p {
     font-size: 1.3rem;
     
+    color: var(--color-4);
+}
+
+.list {
+    margin-bottom: .5em;
+
+    list-style-position: inside;
+}
+
+.list li {
+    font-size: 1.3rem;
     color: var(--color-4);
 }
