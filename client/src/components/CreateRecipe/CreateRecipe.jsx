@@ -7,45 +7,48 @@ import { create } from '../../actions/actionsCreator';
 
 import styles from "./createRecipe.module.css";
 
-const regexUrl = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+const URL = new RegExp("^(http|https)://", "i");
 
-function validate(state) {
+export function validate(state) {
   let errors = {};
   if(!state.title) {
-    errors.title = 'Title is required';
-  } else if (state.title.length > 4) {
-    errors.username = 'Username is invalid';
+    errors.title = 'Tienes que ingresar un título...';
+  } else if (state.title.length < 4) {
+      errors.title = 'El título es inválido.';
   };
   if(!state.summary) {
-    errors.summary = 'Summary is required';
-  } else if (state.summary.length > 4) {
-    errors.summary = 'Summary is invalid';
+    errors.summary = 'Tienes que ingresar un resumen...';
+  } else if (state.summary.length < 4) {
+      errors.summary = 'El resumen es inválido.';
   };
-  if(state.img) {
-    if(regexUrl.test(state.img)) {
-    errors.image = 'Image is invalid';
-    };
+  if(!state.img) {
+    errors.img = 'Tienes que ingresar la URL de una imagen...'
+  } else if(!URL.test(state.img)) {
+      errors.img = 'La url de la imagen no es válida';
   };
   return errors;
 };
 
 export default function CreateRecipe() {
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     title:'',
-    description:'',
-    type: '',
+    summary:'',
     img:'',
-    place:'',
-    date:'',
+    type: [],
+    score:'',
+    health:'',
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    title: '',
+    summary: '',
+    img: '',
+  });
 
   const recipesTypes = useSelector(state => state.recipesTypes);
   
-  const dispatch = useDispatch();
-
   function handleChange(event) {
     const { name, value } = event.target;
     setErrors(validate({
@@ -59,43 +62,48 @@ export default function CreateRecipe() {
   };
 
   function handleSubmit(event) {
+    event.preventDefault();
     dispatch(create(state));
     setState({
       title:'',
       summary:'',
-      type: '',
       img: '',
+      type: [],
       score:'',
       health:'',
     });
-    setErrors({});
+    setErrors({
+      title: '',
+      summary: '',
+      img: '',
+    });
   };
 
   return (
     <>
       <Nav />
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label} htmlFor="title" > Title </label>
+          <label className={styles.label} htmlFor="title" > Título: </label>
           <input
               type="text"
               id="title"
               name = "title"
-              minLength="4"
               value={state.title}
               autoComplete="off"
               className={styles.input}
               onChange={handleChange}
           />
-          <label className={styles.label} htmlFor="summary"> Summary </label>
+          {errors.title && (<p className={styles.danger}> {errors.title} </p>)}
+          <label className={styles.label} htmlFor="summary"> Resumen: </label>
           <textarea 
               id='summary' 
               name="summary" 
-              minLength="4"
               value={state.summary} 
               className={styles.textarea}
               onChange={handleChange}
           >
           </textarea> 
+          {errors.summary && (<p className={styles.danger}> {errors.summary} </p>)}
           <label className={styles.label} htmlFor="filter"> Tipo de Dieta: </label>
           <select name="filter" id="filter" onChange={handleChange}>
             {
@@ -107,7 +115,7 @@ export default function CreateRecipe() {
               })
             }
 			    </select> 
-          <label className={styles.label} htmlFor="score"> Score </label>
+          <label className={styles.label} htmlFor="score"> Puntuación: </label>
           <input 
               type="number"
               id='score'
@@ -118,7 +126,7 @@ export default function CreateRecipe() {
               className={styles.input}
               onChange={handleChange}
           />
-          <label className={styles.label} htmlFor="health"> Health </label>
+          <label className={styles.label} htmlFor="health"> Nivel de salud: </label>
           <input 
               type='number'
               id='health'
@@ -129,17 +137,23 @@ export default function CreateRecipe() {
               className={styles.input}
               onChange={handleChange}
           />
-          <label className={styles.label} htmlFor="image"> Image </label>
-          <input 
-              type='text'
-              id='image'
-              name="image"
+          <label className={styles.label} htmlFor="img" > Imagen: </label>
+          <input
+              type="url"
+              id="img"
+              name = "img"
               value={state.img}
+              placeholder="https://example.com"
               autoComplete="off"
               className={styles.input}
               onChange={handleChange}
           />
-          <button type="submit" className={styles.button}> Crear </button>
+          {errors.img && (<p className={styles.danger}> {errors.img} </p>)}
+          {((!errors.title && !errors.summary && !errors.img) 
+            && (errors.title !== '' && errors.summary !== '' && errors.img !== '')) ? 
+            (<button type="submit" className={styles.button}> Crear </button>) 
+            : 
+            <button type="submit" className={styles.disabled} disabled> Crear </button>}
         </form> 
     </>
   );

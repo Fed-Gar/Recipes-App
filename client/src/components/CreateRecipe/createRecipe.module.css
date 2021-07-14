@@ -7,7 +7,7 @@
     flex-direction: column;
 
     margin-top: 3em;
-    margin-bottom: auto;
+    margin-bottom: 2em;
     margin-right: auto;
     margin-left: auto;
     
@@ -88,4 +88,25 @@
 .button:hover {
     color: var(--color-4);
     background-color: var(--color-2);
+}
+
+.disabled:disabled {
+    width: 5rem;
+    height: 2.5rem;
+    
+    margin-top: .5em;
+    
+    color: var(--color-2);
+    background-color: rgba(96, 152, 212, .5);
+    border-radius: var(--rad);
+    border: none;
+
+    cursor: default;
+
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.danger {
+    color: var(--color-1);
 }
