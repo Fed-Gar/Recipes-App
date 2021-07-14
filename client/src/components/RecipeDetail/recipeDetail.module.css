@@ -25,6 +25,12 @@
     justify-content: space-around;    
 }
 
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
 img {
     width: 30em;
     height: 20em;
