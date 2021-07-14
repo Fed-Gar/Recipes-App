@@ -16,9 +16,9 @@ export default function Pagination() {
   const search = useSelector(state => state.recipesSearch);
   let max;
 
-  if(search.length > 0) max = Math.ceil(search.length / 6);
+  if(search.length > 0) max = Math.ceil(search.length / 3);
   else {
-    max = Math.ceil(recipes.length / 6);
+    max = Math.ceil(recipes.length / 3);
   };
 
   const handlePrev = e => {
