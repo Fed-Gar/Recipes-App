@@ -45,16 +45,35 @@ router.get('/', (req, res, next) => {
     .catch(error => next(error));
   } else {
       const db = Recipe.findAll({where: { name: name }});
-      const api = axios.get(`${BASE_URL}/complexSearch?query=${name}&${API_KEY}`);
+      const api = axios.get(`${BASE_URL}/complexSearch?query=${name}&number=${toget}&${API_KEY}`); // acordarme de sacar number aca y en get recipes
       Promise.all([db, api])
       .then(data => {
         const [ db, api ] = data;
-        const results = [...db, ...api.data.results];
-        if(results.length > 0) {
-          results.splice(9);
-          return res.status(200).json(results);
+        console.log('DB: ', db);
+        const tot = api.data.results.length;
+        if(tot > 0) {
+          api.data.results.forEach((recipe, i) => {
+            axios.get(`${BASE_URL}/${recipe.id}/information?${API_KEY}`)
+            .then(api => {
+              const aux = {
+                id: api.data.id,
+                name: api.data.title,
+                img: api.data.image,
+                score: api.data.spoonacularScore,
+                typeDiet: api.data.diets,
+              };
+              db.push(aux);
+              if((i + 1) === tot) {
+                if(db.length > 0) {
+                  db.splice(9);
+                  return res.status(200).json(db);
+                };
+                res.status(200).json('No hay recetas...');
+              }
+            })
+            .catch(error => next(error));
+          });
         };
-        res.status(200).json('No hay recetas...');
       })
       .catch(error => next(error));
     };
@@ -134,9 +153,10 @@ router.post('/', (req, res, next) => {
     },
   })
   .then(data => {
-    console.log('ID: ', data); // f24cbe9f-6171-40a9-b478-079a309aa1d5
-    const [_recipe, created] = data;
-    if(created) return res.status(200).json('Receta creada con exito...');
+    // console.log('ID: ', data); // f24cbe9f-6171-40a9-b478-079a309aa1d5
+    const [recipe, created] = data;
+    console.log('RECIPE', recipe)
+    if(created) return res.status(200).json(recipe);
     return res.status(200).json('La receta ya existe...');
   })
   .catch(error => next(error));
