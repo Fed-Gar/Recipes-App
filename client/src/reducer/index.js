@@ -5,7 +5,6 @@ const initialState = {
   numPag: 1,
   recipesLoaded: [],
   recipesTypes: [],
-  created: [],
   recipeDetail: {},
 };
 
@@ -34,7 +33,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case CREATE:
       return {
         ...state,
-        created: [...state.created, ...payload],
+        recipesLoaded: [...state.recipesLoaded, ...payload],
       };  
     case ORDER_RECIPES_BY_NAME:
       return {

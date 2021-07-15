@@ -5,15 +5,15 @@ import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPE
 function order(data, sort) {
   if(sort === 'menor') {
     data.sort(function(a, b) {
-      if(a.score < b.score) return -1;
-      if(a.nscoreame > b.score) return 1;
+      if(parseInt(a.score) < parseInt(b.score)) return -1;
+      if(parseInt(a.score) > parseInt(b.score)) return 1;
       return 0;
     });
   };
   if(sort === 'mayor') {
     data.sort(function(a, b) {
-      if(a.score > b.score) return -1;
-      if(a.score < b.score) return 1; 
+      if(parseInt(a.score) > parseInt(b.score)) return -1;
+      if(parseInt(a.score) < parseInt(b.score)) return 1; 
       return 0;
     });
   };
@@ -44,10 +44,11 @@ export function chargeRecipes(toget = 1) {
   };
 };
 
-export function getRecipes(name) {
+export function getRecipes(name, toget = 1) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes?name=${name}`)
+    return axios(`http://localhost:3001/recipes?name=${name}&toget=${toget}`) // sacar el toget
       .then(response => {
+        console.log('DATA:', response);
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
       .catch((error) => console.error(error));
