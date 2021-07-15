@@ -7,7 +7,7 @@ import { create } from '../../actions/actionsCreator';
 
 import styles from "./createRecipe.module.css";
 
-const URL = new RegExp("^(http|https)://", "i");
+// const URL = new RegExp("^(http|https)://", "i");
 
 export function validate(state) {
   let errors = {};
@@ -21,11 +21,6 @@ export function validate(state) {
   } else if (state.summary.length < 4) {
       errors.summary = 'El resumen es inválido.';
   };
-  if(!state.img) {
-    errors.img = 'Tienes que ingresar la URL de una imagen...'
-  } else if(!URL.test(state.img)) {
-      errors.img = 'La url de la imagen no es válida';
-  };
   return errors;
 };
 
@@ -35,7 +30,6 @@ export default function CreateRecipe() {
   const [state, setState] = useState({
     name:'',
     summary:'',
-    img:'',
     type: [],
     score:'',
     steps: '',
@@ -45,7 +39,6 @@ export default function CreateRecipe() {
   const [errors, setErrors] = useState({
     name: '',
     summary: '',
-    img: '',
   });
 
   const recipesTypes = useSelector(state => state.recipesTypes);
@@ -68,7 +61,6 @@ export default function CreateRecipe() {
     setState({
       name:'',
       summary:'',
-      img: '',
       type: [],
       score:'',
       steps: '',
@@ -77,7 +69,6 @@ export default function CreateRecipe() {
     setErrors({
       name: '',
       summary: '',
-      img: '',
     });
   };
 
@@ -148,20 +139,7 @@ export default function CreateRecipe() {
               onChange={handleChange}
           >
           </textarea> 
-          <label className={styles.label} htmlFor="img" > Imagen: </label>
-          <input
-              type="url"
-              id="img"
-              name = "img"
-              value={state.img}
-              placeholder="https://example.com"
-              autoComplete="off"
-              className={styles.input}
-              onChange={handleChange}
-          />
-          {errors.img && (<p className={styles.danger}> {errors.img} </p>)}
-          {((!errors.name && !errors.summary && !errors.img) 
-            && (errors.name !== '' && errors.summary !== '' && errors.img !== '')) ? 
+          {((!errors.name && !errors.summary) && (errors.name !== '' && errors.summary !== '')) ? 
             (<button type="submit" className={styles.button}> Crear </button>) 
             : 
             <button type="submit" className={styles.disabled} disabled> Crear </button>}
