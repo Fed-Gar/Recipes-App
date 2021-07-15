@@ -18,7 +18,7 @@ const chargeTypes = () => {
             })
             .catch(error => console.log(error));
             }); 
-        }
+        };
     })
 };
 
