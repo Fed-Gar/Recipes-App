@@ -11,7 +11,8 @@ export default function Recipe({ name, type, image, id }) {
       <Link to={`/detail/${id}`}>
         { title } 
       </Link>
-      <span> { type || 'Type' } </span>
+      {/* <span> { type || 'Type' } </span> */}
+      <span> Type </span>
       <img src={ image ? image : notImage } alt={`Imagen ilistratiba de un plato de ${title}.`} />
     </div>
   );
