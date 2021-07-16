@@ -55,6 +55,27 @@
     border: none;
 }
 
+.types {
+    width: 80%;
+    height: 8em;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: .5em 0;
+}
+
+.check {
+    width: 11em;
+}
+
+.check label {
+    font-size: 1.2rem;
+    color: var(--color-4);
+}
+
 .textarea {
     width: 80%;
 

@@ -98,16 +98,22 @@ export default function CreateRecipe() {
           </textarea> 
           {errors.summary && (<p className={styles.danger}> {errors.summary} </p>)}
           <label className={styles.label} htmlFor="filter"> Tipo de Dieta: </label>
-          <select name="filter" id="filter" onChange={handleChange}>
+          <div className={styles.types}>
             {
               recipesTypes.map(type => {
-                if(type.name === 'vegan') {
-                  return <option value={type.name} key={type.id} > {type.name} </option>
-                }
-                return <option value={type.name} key={type.id} > {type.name} </option>
+                return (
+                  <div key={type.id} className={styles.check}>
+                    <input
+                      type="checkbox" 
+                      id={type.name} 
+                      name={type.name} 
+                      value={type.name}/>
+                    <label htmlFor={type.name}> {type.name} </label>
+                  </div>
+                );
               })
             }
-			    </select> 
+			    </div> 
           <label className={styles.label} htmlFor="score"> Puntuación: </label>
           <input 
               type="number"
