@@ -3,6 +3,7 @@ const router = Router();
 const axios = require('axios');
 const { Recipe } = require('../db.js'); 
 const { v4: uuidv4 } = require('uuid'); 
+const Type = require('../models/Type.js');
 
 const { BASE_URL, API_KEY } = process.env;
 
@@ -32,15 +33,13 @@ router.get('/', (req, res, next) => {
             };
             db.push(aux);
             if((i + 1) === tot) {
-              if(db.length > 0) {
-                return res.status(200).json(db);
-              };
-              res.status(200).json('No hay recetas...');
-            }
+              return res.status(200).json(db);
+            };
           })
           .catch(error => next(error));
         });
-      };
+      } else if(db.length > 0) return res.status(200).json(db);
+        else { res.status(200).json('No hay recetas...') };
     })
     .catch(error => next(error));
   } else {
@@ -64,20 +63,19 @@ router.get('/', (req, res, next) => {
               };
               db.push(aux);
               if((i + 1) === tot) {
-                if(db.length > 0) {
-                  db.splice(9);
-                  return res.status(200).json(db);
-                };
-                res.status(200).json('No hay recetas...');
-              }
+                db.splice(9);
+                return res.status(200).json(db);
+              };
             })
             .catch(error => next(error));
           });
-        };
+        } else if(db.length > 0) return res.status(200).json(db);
+          else { res.status(200).json('No hay recetas...') }; 
       })
       .catch(error => next(error));
     };
 });
+
 /*
 GET /recipes/{idReceta}
 */
@@ -138,18 +136,51 @@ router.get('/type', (req, res, next) => {
 /*
 POST /recipe
 */
+// router.post('/', (req, res, next) => {
+//   const { name, summary, score, health, steps, img } = req.body;
+//   Recipe.findOrCreate({
+//     where: {name: name},
+//     defaults: {
+//       id: uuidv4(),
+//       name,
+//       img,
+//       summary,
+//       score,
+//       health,
+//       steps,
+//     },
+//   })
+//   .then(data => {
+//     // console.log('ID: ', data); // f24cbe9f-6171-40a9-b478-079a309aa1d5
+//     const [recipe, created] = data;
+//     console.log('RECIPE', recipe)
+//     if(created) return res.status(200).json(recipe);
+//     return res.status(200).json('La receta ya existe...');
+//   })
+//   .catch(error => next(error));
+// });
+
 router.post('/', (req, res, next) => {
-  const { name, summary, score, health, steps, img } = req.body;
+  const { name, summary, score, health, steps, type } = req.body;
   Recipe.findOrCreate({
     where: {name: name},
     defaults: {
       id: uuidv4(),
       name,
-      img,
       summary,
       score,
       health,
       steps,
+      type: {
+        name: type,
+      },
+    },
+    include: {
+      model: Type,
+      attributes: ['name'],
+      where: {
+        name: type,
+      }
     },
   })
   .then(data => {
