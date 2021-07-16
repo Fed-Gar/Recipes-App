@@ -27,10 +27,11 @@ export function validate(state) {
 export default function CreateRecipe() {
   const dispatch = useDispatch();
 
+  const [types, setTypes] = useState({});
+
   const [state, setState] = useState({
     name:'',
     summary:'',
-    type: [],
     score:'',
     steps: '',
     health:'',
@@ -51,7 +52,15 @@ export default function CreateRecipe() {
     }));
     setState({
       ...state,
-      [name]:value,
+      [name]: value,
+    });
+  };
+
+  function handleTypeChange(event) {
+    const { name, checked } = event.target;
+    setTypes({
+      ...types,
+      [name]: checked,
     });
   };
 
@@ -61,7 +70,6 @@ export default function CreateRecipe() {
     setState({
       name:'',
       summary:'',
-      type: [],
       score:'',
       steps: '',
       health:'',
@@ -107,7 +115,9 @@ export default function CreateRecipe() {
                       type="checkbox" 
                       id={type.name} 
                       name={type.name} 
-                      value={type.name}/>
+                      value={type.name}
+                      onChange={handleTypeChange}
+                    />
                     <label htmlFor={type.name}> {type.name} </label>
                   </div>
                 );
