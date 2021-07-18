@@ -170,7 +170,14 @@ GET /recipes/type?type="..."
 */
 router.get('/type', (req, res, next) => {
   const { diet, toget } = req.query;
-  const db = Recipe.findAll(); // buscar por la dieta
+  const db = Recipe.findAll({
+    include: {
+      model: Type,
+      where: {
+        name: diet,
+      },
+    },
+  }); 
   const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&${API_KEY}`);
   Promise.all([db, api])
   .then(data => {
