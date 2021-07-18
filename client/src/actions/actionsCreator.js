@@ -78,8 +78,8 @@ export function create(data) {
   return function(dispatch) {
     return axios.post(`http://localhost:3001/recipes`, data)
       .then(response => {
-        console.log('POST: ', response);
-        dispatch({ type: CREATE, payload: response });
+        console.log('POST: ', response.data);
+        dispatch({ type: CREATE, payload: response.data }); // veeeeeeeeer como lo tienen
       })
       .catch(error => console.log(error));
   };
@@ -94,7 +94,7 @@ export function orderByName(recipes, sort) {
 };
 
 export function orderByScore(recipes, sort) {
-  let sortScore = recipes.slice(); // hace una copia
+  let sortScore = recipes.slice(); 
   return function(dispatch) {
       let result = order(sortScore, sort);
       dispatch({type: ORDER_RECIPES_BY_SCORE, payload: result});
