@@ -12,7 +12,7 @@ export default function Recipes() {
   const dispatch = useDispatch();
 
   const recipesLoaded = useSelector(state => state.recipesLoaded);
-  console.log('RECIPES: ', recipesLoaded);
+  // console.log('RECIPES: ', recipesLoaded);
   
   const numPag = useSelector(state => state.numPag);
 
