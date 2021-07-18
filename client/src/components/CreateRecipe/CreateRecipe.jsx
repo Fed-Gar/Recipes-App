@@ -27,7 +27,20 @@ export function validate(state) {
 export default function CreateRecipe() {
   const dispatch = useDispatch();
 
-  const [types, setTypes] = useState({});
+  const [types, setTypes] = useState({
+    diets: [
+      {id: 1, value: "gluten free", isChecked: false},
+      {id: 2, value: "katogenic", isChecked: false},
+      {id: 3, value: "lacto-vegetarian", isChecked: false},
+      {id: 4, value: "ovo-vegetarian", isChecked: false},
+      {id: 5, value: "paleo", isChecked: false},
+      {id: 6, value: "pescetarian", isChecked: false},
+      {id: 7, value: "primal", isChecked: false},
+      {id: 8, value: "vegan", isChecked: false},
+      {id: 9, value: "vegetarian", isChecked: false},
+      {id: 10, value: "whole30", isChecked: false},
+    ],
+  });
 
   const [state, setState] = useState({
     name:'',
@@ -43,6 +56,16 @@ export default function CreateRecipe() {
   });
 
   const recipesTypes = useSelector(state => state.recipesTypes);
+
+  function handleChangeTypes(event) {
+    let diets = types.diets;
+    diets.forEach(diet => {
+       if(diet.value === event.target.value) {
+        diet.isChecked = event.target.checked;
+      };
+    });
+    setTypes({diets: diets});
+  };
   
   function handleChange(event) {
     const { name, value } = event.target;
@@ -56,17 +79,11 @@ export default function CreateRecipe() {
     });
   };
 
-  function handleTypeChange(event) {
-    const { name, checked } = event.target;
-    setTypes({
-      ...types,
-      [name]: checked,
-    });
-  };
-
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(create(state));
+    // const diets = Object.keys(types);
+    const data = {state, types};
+    dispatch(create(data));
     setState({
       name:'',
       summary:'',
@@ -77,6 +94,20 @@ export default function CreateRecipe() {
     setErrors({
       name: '',
       summary: '',
+    });
+    setTypes({
+      diets: [
+        {id: 1, value: "gluten free", isChecked: false},
+        {id: 2, value: "katogenic", isChecked: false},
+        {id: 3, value: "lacto-vegetarian", isChecked: false},
+        {id: 4, value: "ovo-vegetarian", isChecked: false},
+        {id: 5, value: "paleo", isChecked: false},
+        {id: 6, value: "pescetarian", isChecked: false},
+        {id: 7, value: "primal", isChecked: false},
+        {id: 8, value: "vegan", isChecked: false},
+        {id: 9, value: "vegetarian", isChecked: false},
+        {id: 10, value: "whole30", isChecked: false},
+      ],
     });
   };
 
@@ -116,7 +147,7 @@ export default function CreateRecipe() {
                       id={type.name} 
                       name={type.name} 
                       value={type.name}
-                      onChange={handleTypeChange}
+                      onChange={handleChangeTypes}
                     />
                     <label htmlFor={type.name}> {type.name} </label>
                   </div>
