@@ -1,5 +1,5 @@
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
-        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES} from '../actions/actions';
+        FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CHARGE_RECIPES} from '../actions/actions';
 
 const initialState = {
   numPag: 1,
@@ -30,11 +30,6 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipesTypes: payload,
       };
-    case CREATE:
-      return {
-        ...state,
-        recipesLoaded: [...state.recipesLoaded, ...payload],
-      };  
     case ORDER_RECIPES_BY_NAME:
       return {
         ...state,
