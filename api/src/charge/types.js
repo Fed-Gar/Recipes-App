@@ -1,5 +1,4 @@
 const { Type } = require('../db.js');
-const { v4: uuidv4 } = require('uuid');   
 
 const diets = ['gluten free', 'ketogenic', 'lacto-vegetarian','ovo-vegetarian',
                 'paleo', 'pescetarian', 'primal', 'vegan', 'vegetarian', 'whole30'];
@@ -8,9 +7,9 @@ const chargeTypes = () => {
     Type.findAll()
     .then(response => {
         if(response.length < 1) {
-            diets.forEach(diet => {
+            diets.forEach((diet, i) => {
                 Type.create({
-                    id: uuidv4(),
+                    id: i + 1,
                     name: diet,     
                 })
             .then(data => {
