@@ -101,15 +101,21 @@ export function orderByScore(recipes, sort) {
   };
 };
 
-export function filterByType(diet, toget = 1) {
+// export function filterByType(diet, toget = 1) {
+//   return function(dispatch) {
+//     return axios(`http://localhost:3001/recipes/type?diet=${diet}&toget=${toget}`)
+//       .then(data =>  { 
+//         console.log('DATA: ', data); 
+//         dispatch({type: FILTER_BY_TYPE, payload: data});
+//       });
+//   };
+// }; 
+
+export function filterByType(payload) {
   return function(dispatch) {
-    return axios(`http://localhost:3001/recipes/type?diet=${diet}&toget=${toget}`)
-      .then(data =>  { 
-        console.log('DATA: ', data); 
-        dispatch({type: FILTER_BY_TYPE, payload: data});
-      });
+    dispatch({type: FILTER_BY_TYPE, payload});
   };
-}; 
+};
 
 export function setPagination(payload) {
   return function(dispatch) {
