@@ -11,8 +11,19 @@ export default function Recipe({ name, type, image, id }) {
       <Link to={`/detail/${id}`}>
         { title } 
       </Link>
-      {/* <span> { type || 'Type' } </span> */}
-      <span> Type </span>
+      <div className={styles.diets}> 
+        {
+          type && type.length > 0 ? 
+            type.map((diet, i) => {
+              if(typeof diet === 'object') {
+                 return <> <span key={i}> {diet.name} </span> <br /> </>
+              };
+              return <> <span key={i}> {diet} </span> <br /> </>
+            })
+          :
+          <span> Sin Dietas... </span>
+        }
+      </div>
       <img src={ image ? image : notImage } alt={`Imagen ilistratiba de un plato de ${title}.`} />
     </div>
   );

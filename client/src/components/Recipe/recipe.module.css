@@ -1,6 +1,6 @@
 .contRecipe {
     width: 18em;
-    height: 22em;
+    height: 24em;
 
     display: flex;
     flex-direction: column;
@@ -30,8 +30,19 @@
     margin-bottom: .5em;
 }
 
+.diets {
+    width: 14em;
+    height: 7em;
+
+    position: absolute;
+    top: 6em;
+    left: 2em;
+    right: 2em;
+}
+
 .contRecipe span {
     font-size: 1.2rem;
+    color: var(--color-4);
 
     margin-bottom: .5em;
 }
