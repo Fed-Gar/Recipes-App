@@ -21,7 +21,12 @@ export default function RecipeDetail() {
   }, []);
 
   if(!data) {
-    return <div className={styles.loading}> <Loading /> </div>
+    return (
+      <>
+        <Nav />
+        <div className={styles.loading}> <Loading /> </div>
+      </>
+    );
   } else {
       return (
         <>
@@ -64,6 +69,21 @@ export default function RecipeDetail() {
                       {
                         data.typeDiet.map((diet, i) => {
                           return <li key={i}> {diet} </li>
+                        })
+                      }
+                    </ul> 
+                  </>
+                  :
+                  null
+              }
+              {
+                data.types && data.types.length > 0 ? 
+                  <>
+                    <h4> Tipos de Dietas: </h4>
+                    <ul className={styles.list}>
+                      {
+                        data.types.map((diet, i) => {
+                          return <li key={i}> {diet.name} </li>
                         })
                       }
                     </ul> 
