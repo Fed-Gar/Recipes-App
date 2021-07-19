@@ -4,6 +4,7 @@ import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPE
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
+  recipesFilter: [],
   recipesTypes: [],
   recipeDetail: {},
 };
@@ -48,9 +49,27 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        recipesLoaded: payload,
+        recipesFilter: filter(payload, state.recipesLoaded),
       }; 
     default:
       return state;    
   };
+};
+
+function filter(diet, loaded) {
+  const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"); 
+  const diets = [];
+  for(let i = 0; i < loaded.length; i++) {
+    if(UUID.test(loaded[i].id)) {
+      for(let j = 0; j < loaded[i].types.length; j++) {
+        if(loaded[i].types[j].name === diet) diets.push(loaded[i]);
+      };
+    } else {
+        for(let h = 0; h < loaded[i].typeDiet.length; h++) {
+          console.log('2', loaded[i].typeDiet[h]);
+          if(loaded[i].typeDiet[h] === diet) diets.push(loaded[i]);
+        };
+    };
+  };
+  return diets;
 };
