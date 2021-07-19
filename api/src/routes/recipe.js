@@ -120,7 +120,8 @@ router.get('/:idReceta', (req, res, next) => {
       },
     })
     .then(db => {
-      return res.status(200).json(db);
+      if(db.length > 0) return res.status(200).json(db[0]);
+      return res.status(200).json('No hay recetas...');
     })
     .catch(error => next(error));
   } else {
