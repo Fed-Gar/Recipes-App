@@ -12,7 +12,6 @@ export default function Recipes() {
   const dispatch = useDispatch();
 
   const recipesLoaded = useSelector(state => state.recipesLoaded);
-  // console.log('RECIPES: ', recipesLoaded);
   
   const numPag = useSelector(state => state.numPag);
 
@@ -40,7 +39,7 @@ export default function Recipes() {
                       id={recipe.id}
                       name={recipe.name}
                       image={recipe.img}
-                      type={recipe.typeDiet}
+                      type={recipe.typeDiet || recipe.types}
                     />
                 );
               })
