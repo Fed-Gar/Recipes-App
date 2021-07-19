@@ -6,7 +6,6 @@ import { filter } from './filter';
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
-  recipesFilter: [],
   recipesTypes: [],
   recipeDetail: {},
 };
@@ -51,7 +50,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        recipesFilter: filter(payload, state.recipesLoaded),
+        recipesLoaded: filter(payload, state.recipesLoaded),
       }; 
     default:
       return state;    
