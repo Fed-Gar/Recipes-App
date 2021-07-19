@@ -11,6 +11,40 @@ const { BASE_URL, API_KEY } = process.env;
 
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 /*
+GET /recipes/type?type="..."
+*/
+// router.get('/type', (req, res, next) => {
+//   const { diet, toget } = req.query;
+//   const db = Recipe.findAll({
+//     include: {
+//       model: Type,
+//       where: {
+//         name: diet,
+//       },
+//     },
+//   }); 
+//   const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&addRecipeInformation=true&${API_KEY}`);
+//   Promise.all([db, api])
+//   .then(data => {
+//     const [db, api] = data;
+//     if(api.data.number > 0) {
+//       api.data.results.forEach(recipe => {
+//         const aux = {
+//           id: recipe.id,
+//           name: recipe.title,
+//           img: recipe.image,
+//           score: recipe.spoonacularScore,
+//           typeDiet: recipe.diets,
+//         };
+//         db.push(aux);
+//       });
+//       return res.status(200).json(db);
+//     } else if(db.length > 0) return res.status(200).json(db);
+//       else {res.status(200).json('No hay recetas...')};
+//   })
+//   .catch(error => next(error));
+// });
+/*
 GET /recipes?name="..."
 */
 router.get('/', (req, res, next) => {
@@ -151,53 +185,6 @@ router.get('/:idReceta', (req, res, next) => {
       })
       .catch(error => next(error));
     }; 
-});
-/*
-GET /recipes/type?type="..."
-*/
-// router.get('/type', (req, res, next) => {
-//   const { diet, toget } = req.query;
-//   const db = Recipe.findAll({
-//     include: {
-//       model: Type,
-//       where: {
-//         name: diet,
-//       },
-//     },
-//   }); 
-//   const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&${API_KEY}`);
-//   Promise.all([db, api])
-//   .then(data => {
-//     const [ db, api ] = data;
-//     const results = [...db, ...api.data.results];
-//     if(results.length > 0) {
-//       return res.status(200).json(results);
-//     };
-//     res.status(200).json('No hay recetas...');
-//   })
-//   .catch(error => next(error));
-// });
-router.get('/type', (req, res, next) => {
-  const { diet, toget } = req.query;
-  const db = Recipe.findAll({
-    include: {
-      model: Type,
-      where: {
-        name: diet,
-      },
-    },
-  }); 
-  const api = axios.get(`${BASE_URL}/findByIngredients?diet=${diet}&number=${toget}&${API_KEY}`);
-  Promise.all([db, api])
-  .then(data => {
-    const [ db, api ] = data;
-    const results = [...db, ...api.data.results];
-    if(results.length > 0) {
-      return res.status(200).json(results);
-    };
-    res.status(200).json('No hay recetas...');
-  })
-  .catch(error => next(error));
 });
 /*
 POST /recipe
