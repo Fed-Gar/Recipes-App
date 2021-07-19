@@ -81,7 +81,6 @@ export default function CreateRecipe() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // const diets = Object.keys(types);
     const data = {state, types};
     dispatch(create(data));
     setState({
