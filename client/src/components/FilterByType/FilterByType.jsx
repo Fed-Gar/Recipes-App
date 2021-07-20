@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTypes, filterByType, chargeRecipes } from '../../actions/actionsCreator';
 
@@ -15,9 +15,17 @@ export default function FilterByType() {
 	value === 'todas' ? dispatch(chargeRecipes()) : dispatch(filterByType(value)); 
   };
 
-  useEffect(() => {
+  //   useEffect(() => {
+  // 	dispatch(getTypes());
+  //   }, []);
+  // para solucionar esto: React Hook useEffect has a missing dependency: 'dispatch'
+  const get = useCallback(() => {
 	dispatch(getTypes());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+	get();
+  }, [get]);
 
   if(recipesTypes.length > 0) {
 	  return (
