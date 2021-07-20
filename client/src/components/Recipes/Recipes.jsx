@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Recipe from '../Recipe/Recipe';   
@@ -20,9 +20,17 @@ export default function Recipes() {
   let initialCount = finalCount - group;
   let recipes = recipesLoaded.slice(initialCount, finalCount);
 
-  useEffect(()=> {
+  // useEffect(()=> {
+  //   dispatch(chargeRecipes());
+  // }, []);
+
+  const charge = useCallback(() => {
     dispatch(chargeRecipes());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(()=> {
+    charge();
+  }, [charge]);
 
   if(recipes.length < 1 || !recipes) {
     return <div className={styles.loading}> <Loading /> </div>
