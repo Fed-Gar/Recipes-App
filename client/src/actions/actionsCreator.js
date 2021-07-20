@@ -1,38 +1,7 @@
 import axios from 'axios';
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES } from './actions';
-
-function order(data, sort) {
-  if(sort === 'menor') {
-    data.sort(function(a, b) {
-      if(parseInt(a.score) < parseInt(b.score)) return -1;
-      if(parseInt(a.score) > parseInt(b.score)) return 1;
-      return 0;
-    });
-  };
-  if(sort === 'mayor') {
-    data.sort(function(a, b) {
-      if(parseInt(a.score) > parseInt(b.score)) return -1;
-      if(parseInt(a.score) < parseInt(b.score)) return 1; 
-      return 0;
-    });
-  };
-  if(sort === 'aZ') {
-    data.sort(function(a, b) {
-      if(a.name < b.name) return -1;
-      if(a.name > b.name) return 1;
-      return 0;
-    });
-  };
-  if(sort === 'zA') {
-    data.sort(function(a, b) {
-      if(a.name > b.name) return -1;
-      if(a.name < b.name) return 1; 
-      return 0;
-    });
-  };
-  return data;
-};
+import { order } from './order';
 
 export function chargeRecipes(toget = 1) {
   return function(dispatch) {
