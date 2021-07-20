@@ -175,7 +175,7 @@ router.get('/:idReceta', (req, res, next) => {
             image: data.image,
             score: data.spoonacularScore,
             health: data.healthScore,
-            summary: data.summary,
+            summary: data.summary.replace(/<[^>]*>?/g, ''),
             typeDish: data.dishTypes,
             typeDiet: data.diets,
             steps: steps,
