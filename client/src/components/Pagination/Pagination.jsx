@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setPagination } from '../../actions/actionsCreator';
@@ -24,9 +24,17 @@ export default function Pagination() {
 	if(numPag < max) setNumPage(numPag + 1);
   };
 
-  useEffect(()=> {
-	  dispatch(setPagination(numPag));
-  }, [numPag]);
+  // useEffect(()=> {
+	//   dispatch(setPagination(numPag));
+  // }, [numPag]);
+
+  const set = useCallback(() => {
+    dispatch(setPagination(numPag));
+  }, [numPag, dispatch]);
+
+  useEffect(() => {
+    set();
+  }, [set]);
 
   return (
     <div className={styles.pagCont}>
