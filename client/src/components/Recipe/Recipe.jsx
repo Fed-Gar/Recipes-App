@@ -16,9 +16,9 @@ export default function Recipe({ name, type, image, id }) {
           type && type.length > 0 ? 
             type.map((diet, i) => {
               if(typeof diet === 'object') {
-                 return <> <span key={i}> {diet.name} </span> <br /> </>
+                 return <div key={i}> <span> {diet.name} </span> <br /> </div>
               };
-              return <> <span key={i}> {diet} </span> <br /> </>
+              return <div key={i}> <span > {diet} </span> <br /> </div>
             })
           :
           <span> Sin Dietas... </span>
