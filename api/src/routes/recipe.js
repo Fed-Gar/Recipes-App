@@ -11,40 +11,6 @@ const { BASE_URL, API_KEY } = process.env;
 
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 /*
-GET /recipes/type?type="..."
-*/
-// router.get('/type', (req, res, next) => {
-//   const { diet, toget } = req.query;
-//   const db = Recipe.findAll({
-//     include: {
-//       model: Type,
-//       where: {
-//         name: diet,
-//       },
-//     },
-//   }); 
-//   const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&addRecipeInformation=true&${API_KEY}`);
-//   Promise.all([db, api])
-//   .then(data => {
-//     const [db, api] = data;
-//     if(api.data.number > 0) {
-//       api.data.results.forEach(recipe => {
-//         const aux = {
-//           id: recipe.id,
-//           name: recipe.title,
-//           img: recipe.image,
-//           score: recipe.spoonacularScore,
-//           typeDiet: recipe.diets,
-//         };
-//         db.push(aux);
-//       });
-//       return res.status(200).json(db);
-//     } else if(db.length > 0) return res.status(200).json(db);
-//       else {res.status(200).json('No hay recetas...')};
-//   })
-//   .catch(error => next(error));
-// });
-/*
 GET /recipes?name="..."
 */
 router.get('/', (req, res, next) => {
@@ -85,60 +51,30 @@ router.get('/', (req, res, next) => {
           model: Type,
         },
       });
-      const api = axios.get(`${BASE_URL}/complexSearch?query=${name}&number=${toget}&addRecipeInformation=true&${API_KEY}`); // acordarme de sacar number aca y en get recipes
+      const api = axios.get(`${BASE_URL}/complexSearch?number=${toget}&addRecipeInformation=true&${API_KEY}`); 
       Promise.all([db, api])
       .then(data => {
         let [ db, api ] = data;
         if(api.data.number > 0) {
           api.data.results.forEach(recipe => {
-            const aux = {
+            if(recipe.title.includes(name)) {
+              const aux = {
               id: recipe.id,
               name: recipe.title,
               img: recipe.image,
               score: recipe.spoonacularScore,
               typeDiet: recipe.diets,
+              };
+              db.push(aux);
             };
-            db.push(aux);
           });
-          return res.status(200).json(db);
-        } else if(db.length > 0) return res.status(200).json(db.length = 9); //chequear
+          return res.status(200).json(db.length = 9);
+        } else if(db.length > 0) return res.status(200).json(db.length = 9); 
           else {res.status(200).json('No hay recetas...')};
     })
     .catch(error => next(error));
   };
-});
-//-----------------------------------------------------------
-// router.get('/', (req, res, next) => {
-//   const { name } = req.query;
-//   if(!name) {
-//     Recipe.findAll({
-//       include: {
-//         model: Type,
-//       },
-//     })
-//     .then(db => {
-//       if(db.length > 0) return res.status(200).json(db);
-//       else { res.status(200).json('No hay recetas...') };
-//     })
-//     .catch(error => next(error));
-
-//   } else {
-//       Recipe.findAll({
-//         where: { 
-//           name: name 
-//         },
-//         include: {
-//           model: Type,
-//         },
-//       })
-//       .then(db => {
-//         // console.log('DB: ', db);
-//         if(db.length > 0) return res.status(200).json(db);
-//           else { res.status(200).json('No hay recetas...') }; 
-//       })
-//       .catch(error => next(error));
-//     };
-// });
+});    
 /*
 GET /recipes/{idReceta}
 */
@@ -181,6 +117,8 @@ router.get('/:idReceta', (req, res, next) => {
             steps: steps,
           };
           return res.status(200).json(recipe);
+        } else {
+            return res.status(200).json('No hay recetas...');
         }; 
       })
       .catch(error => next(error));
@@ -191,8 +129,6 @@ POST /recipe
 */
 router.post('/', (req, res, next) => {
   const { state, types } = req.body;
-  // console.log('POST:', state, types);
-  // console.log('POST:', types.diets);
   Recipe.findOrCreate({
     where: {name: state.name},
     defaults: {
@@ -206,7 +142,7 @@ router.post('/', (req, res, next) => {
   })
   .then(data => {
     const [recipe, created] = data;
-    console.log('RECIPE', recipe)
+    console.log('RECIPE', recipe);
     if(created) {
       types.diets.forEach(diet => {
         if(diet.isChecked) recipe.addType(diet.id);
@@ -219,3 +155,136 @@ router.post('/', (req, res, next) => {
 });
 
 module.exports = router;
+
+// ---------------------------------------------------------------------
+/*
+GET /recipes/type?type="..."
+*/
+// router.get('/type', (req, res, next) => {
+//   const { diet, toget } = req.query;
+//   const db = Recipe.findAll({
+//     include: {
+//       model: Type,
+//       where: {
+//         name: diet,
+//       },
+//     },
+//   }); 
+//   const api = axios.get(`${BASE_URL}/complexSearch?diet=${diet}&number=${toget}&addRecipeInformation=true&${API_KEY}`);
+//   Promise.all([db, api])
+//   .then(data => {
+//     const [db, api] = data;
+//     if(api.data.number > 0) {
+//       api.data.results.forEach(recipe => {
+//         const aux = {
+//           id: recipe.id,
+//           name: recipe.title,
+//           img: recipe.image,
+//           score: recipe.spoonacularScore,
+//           typeDiet: recipe.diets,
+//         };
+//         db.push(aux);
+//       });
+//       return res.status(200).json(db);
+//     } else if(db.length > 0) return res.status(200).json(db);
+//       else {res.status(200).json('No hay recetas...')};
+//   })
+//   .catch(error => next(error));
+// });
+/*
+GET /recipes sin api
+*/
+// router.get('/', (req, res, next) => {
+//   const { name } = req.query;
+//   if(!name) {
+//     Recipe.findAll({
+//       include: {
+//         model: Type,
+//       },
+//     })
+//     .then(db => {
+//       if(db.length > 0) return res.status(200).json(db);
+//       else { res.status(200).json('No hay recetas...') };
+//     })
+//     .catch(error => next(error));
+
+//   } else {
+//       Recipe.findAll({
+//         where: { 
+//           name: name 
+//         },
+//         include: {
+//           model: Type,
+//         },
+//       })
+//       .then(db => {
+//         // console.log('DB: ', db);
+//         if(db.length > 0) return res.status(200).json(db);
+//           else { res.status(200).json('No hay recetas...') }; 
+//       })
+//       .catch(error => next(error));
+//     };
+// });
+/*
+GET /recipes?name="..."
+*/
+// router.get('/', (req, res, next) => {
+//   const { name, toget } = req.query;
+//   if(!name) {
+//     const db = Recipe.findAll({
+//       include: {
+//         model: Type,
+//       },
+//     });
+//     const api = axios.get(`${BASE_URL}/complexSearch?number=${toget}&addRecipeInformation=true&${API_KEY}`);
+//     Promise.all([db, api])
+//     .then(data => {
+//       let [ db, api ] = data;
+//       if(api.data.number > 0) {
+//         api.data.results.forEach(recipe => {
+//           const aux = {
+//             id: recipe.id,
+//             name: recipe.title,
+//             img: recipe.image,
+//             score: recipe.spoonacularScore,
+//             typeDiet: recipe.diets,
+//           };
+//           db.push(aux);
+//         });
+//         return res.status(200).json(db);
+//       } else if(db.length > 0) return res.status(200).json(db);
+//         else {res.status(200).json('No hay recetas...')};
+//     })
+//     .catch(error => next(error));
+//   } else {
+//       const title = name.toLowerCase();
+//       const db = Recipe.findAll({
+//         where: { 
+//           name: title, 
+//         },
+//         include: {
+//           model: Type,
+//         },
+//       });
+//       const api = axios.get(`${BASE_URL}/complexSearch?query=${name}&number=${toget}&addRecipeInformation=true&${API_KEY}`); // acordarme de sacar number aca y en get recipes
+//       Promise.all([db, api])
+//       .then(data => {
+//         let [ db, api ] = data;
+//         if(api.data.number > 0) {
+//           api.data.results.forEach(recipe => {
+//             const aux = {
+//               id: recipe.id,
+//               name: recipe.title,
+//               img: recipe.image,
+//               score: recipe.spoonacularScore,
+//               typeDiet: recipe.diets,
+//             };
+//             db.push(aux);
+//           });
+//           return res.status(200).json(db);
+//         } else if(db.length > 0) return res.status(200).json(db.length = 9); //chequear
+//           else {res.status(200).json('No hay recetas...')};
+//     })
+//     .catch(error => next(error));
+//   };
+// });
