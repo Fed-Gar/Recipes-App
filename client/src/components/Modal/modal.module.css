@@ -1,0 +1,49 @@
+.modal {
+    width: 40%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 35%;
+    left: 40%;
+
+    margin-top: 3em;
+
+    background-color: var(--color-3);
+    border-radius: var(--rad);
+    padding: 1rem;
+    box-shadow: var(--shad-1);
+}
+
+.modal h3 {
+    margin: 1em;
+
+    font-size: 1.2rem;
+    color: var(--color-4);
+}
+
+.modal button {
+    width: 5rem;
+    height: 2.5rem;
+
+    margin-top: .5em;
+
+    color: var(--color-2);
+    background-color: var(--color-4);
+    border-radius: var(--rad);
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.modal button:hover {
+    color: var(--color-4);
+    background-color: var(--color-2);
+}
