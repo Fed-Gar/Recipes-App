@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Recipe from '../Recipe/Recipe';   
 import Loading from '../Loading/Loading';
+import Modal from '../Modal/Modal';
 
 import { chargeRecipes } from '../../actions/actionsCreator';
 
@@ -35,8 +36,7 @@ export default function Recipes() {
   if(recipes.length < 1 || !recipes) {
     return <div className={styles.loading}> <Loading /> </div>
   } else if(typeof recipesLoaded === 'string') {
-      dispatch(chargeRecipes());
-      alert('No hay recetas...');
+      return <Modal />
     } else {
         return (
           <div className={styles.contRecipes}>
