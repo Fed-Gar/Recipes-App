@@ -12,5 +12,6 @@ export function filter(diet, loaded) {
           };
       };
     };
-    return diets;
+    if(diets.length > 0) return diets;
+    return 'No hay recetas...';
 };
