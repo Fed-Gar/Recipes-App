@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import Nav from '../Nav/Nav';
 
-import { create } from '../../actions/actionsCreator';
+import { create, getTypes } from '../../actions/actionsCreator';
 
 import styles from "./createRecipe.module.css";
 
@@ -109,6 +109,10 @@ export default function CreateRecipe() {
       ],
     });
   };
+
+  useEffect(() => {
+    dispatch(getTypes());
+  });
 
   return (
     <>
