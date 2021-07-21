@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { order } from './order';
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CREATE, CHARGE_RECIPES } from './actions';
-import { order } from './order';
 
 export function chargeRecipes(toget = 1) {
   return function(dispatch) {
@@ -48,7 +48,7 @@ export function create(data) {
     return axios.post(`http://localhost:3001/recipes`, data)
       .then(response => {
         console.log('POST: ', response.data);
-        dispatch({ type: CREATE, payload: response.data }); // veeeeeeeeer como lo tienen
+        dispatch({ type: CREATE, payload: response.data });
       })
       .catch(error => console.log(error));
   };
