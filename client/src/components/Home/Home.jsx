@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Nav from '../Nav/Nav';
 import SearchBar from '../SearchBar/SearchBar';
 import Recipes from '../Recipes/Recipes';
