@@ -17,7 +17,6 @@ export function getRecipes(name, toget = 1) {
   return function(dispatch) {
     return axios(`http://localhost:3001/recipes?name=${name}&toget=${toget}`) // sacar el toget
       .then(response => {
-        console.log('DATA:', response);
         dispatch({ type: GET_RECIPES, payload: response.data })
       })
       .catch((error) => console.error(error));
@@ -39,7 +38,8 @@ export function getTypes() {
     return axios(`http://localhost:3001/types`)
       .then(response =>  {
         dispatch({ type: GET_RECIPES_TYPES, payload: response.data });
-      });
+      })
+      .catch(error => console.log(error));
   };
 };
 
