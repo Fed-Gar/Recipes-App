@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Search from '../Search/Search';
 import Ordering from '../Ordering/Ordering';
 import FilterByType from '../FilterByType/FilterByType';
