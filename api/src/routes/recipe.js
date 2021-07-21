@@ -57,10 +57,10 @@ router.get('/', (req, res, next) => {
         let [ db, api ] = data;
         if(api.data.number > 0) {
           api.data.results.forEach(recipe => {
-            if(recipe.title.includes(name)) {
+            if(recipe.title.toLowerCase().includes(title)) {
               const aux = {
               id: recipe.id,
-              name: recipe.title,
+              name: recipe.title.toLowerCase(),
               img: recipe.image,
               score: recipe.spoonacularScore,
               typeDiet: recipe.diets,
@@ -68,9 +68,12 @@ router.get('/', (req, res, next) => {
               db.push(aux);
             };
           });
-          return res.status(200).json(db.length = 9);
-        } else if(db.length > 0) return res.status(200).json(db.length = 9); 
-          else {res.status(200).json('No hay recetas...')};
+          db.splice(9);
+          return res.status(200).json(db);
+        } else if(db.length > 0) {
+            db.splice(9);
+            return res.status(200).json(db); 
+        } else {res.status(200).json('No hay recetas...')};
     })
     .catch(error => next(error));
   };
@@ -133,7 +136,7 @@ router.post('/', (req, res, next) => {
     where: {name: state.name},
     defaults: {
       id: uuidv4(),
-      name: state.name,
+      name: state.name.toLowerCase(),
       summary: state.summary,
       score: state.score,
       health: state.health,
@@ -142,7 +145,6 @@ router.post('/', (req, res, next) => {
   })
   .then(data => {
     const [recipe, created] = data;
-    console.log('RECIPE', recipe);
     if(created) {
       types.diets.forEach(diet => {
         if(diet.isChecked) recipe.addType(diet.id);
