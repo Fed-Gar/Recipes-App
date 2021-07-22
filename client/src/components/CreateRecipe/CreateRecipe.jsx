@@ -112,7 +112,7 @@ export default function CreateRecipe() {
 
   useEffect(() => {
     dispatch(getTypes());
-  });
+  }, []);
 
   return (
     <>
