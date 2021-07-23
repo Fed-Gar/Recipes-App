@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import Nav from '../Nav/Nav';
@@ -110,9 +110,13 @@ export default function CreateRecipe() {
     });
   };
 
-  useEffect(() => {
+  const get = useCallback(() => {
     dispatch(getTypes());
-  });
+  }, [dispatch]);
+
+  useEffect(() => {
+    get();
+  }, [get]);
 
   return (
     <>
