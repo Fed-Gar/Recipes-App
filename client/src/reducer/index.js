@@ -1,8 +1,8 @@
 import { GET_RECIPES, GET_RECIPE_DETAIL, ORDER_RECIPES_BY_NAME, GET_RECIPES_TYPES,
         FILTER_BY_TYPE, ORDER_RECIPES_BY_SCORE, SET_PAGINATION, CHARGE_RECIPES} from '../actions/actions';
 
-import { filter } from './filter';
-
+import { order } from './utils/order';
+  
 const initialState = {
   numPag: 1,
   recipesLoaded: [],
@@ -11,6 +11,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, {type, payload}) {
+  console.log('PAY: ', payload);
   switch (type) {
     case CHARGE_RECIPES:
       return {
@@ -32,15 +33,25 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipesTypes: payload,
       };
+    // case ORDER_RECIPES_BY_NAME:
+    //   return {
+    //     ...state,
+    //     recipesLoaded: payload,
+    //   };
+    // case ORDER_RECIPES_BY_SCORE:
+    //   return {
+    //     ...state,
+    //     recipesLoaded: payload,
+    //   };
     case ORDER_RECIPES_BY_NAME:
       return {
         ...state,
-        recipesLoaded: payload,
+        recipesLoaded: order(payload.recipes, payload.sort),
       };
     case ORDER_RECIPES_BY_SCORE:
       return {
         ...state,
-        recipesLoaded: payload,
+        recipesLoaded: order(payload.recipes, payload.sort),
       };
     case SET_PAGINATION:
       return {
@@ -50,7 +61,7 @@ export default function reducer(state = initialState, {type, payload}) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        recipesLoaded: filter(payload, state.recipesLoaded),
+        recipesLoaded: payload,
       }; 
     default:
       return state;    
