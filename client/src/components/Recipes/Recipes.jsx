@@ -21,10 +21,6 @@ export default function Recipes() {
   let initialCount = finalCount - group;
   let recipes = recipesLoaded.slice(initialCount, finalCount);
 
-  // useEffect(()=> {
-  //   dispatch(chargeRecipes());
-  // }, []);
-
   const charge = useCallback(() => {
     dispatch(chargeRecipes());
   }, [dispatch]);
