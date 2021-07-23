@@ -15,10 +15,6 @@ export default function FilterByType() {
 	value === 'todas' ? dispatch(chargeRecipes()) : dispatch(filterByType(value)); 
   };
 
-  //   useEffect(() => {
-  // 	dispatch(getTypes());
-  //   }, []);
-  // para solucionar esto: React Hook useEffect has a missing dependency: 'dispatch'
   const get = useCallback(() => {
 	dispatch(getTypes());
   }, [dispatch]);
