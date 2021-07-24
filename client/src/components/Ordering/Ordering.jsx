@@ -18,7 +18,7 @@ export default function Ordering() {
   
   return (
 		<div className={styles.ordCont}>
-			<label htmlFor="order"> Ordenar por: </label>
+			<label htmlFor="order"> Sort By: </label>
             <select 
 				name="order" 
 				id="order" 
@@ -29,8 +29,8 @@ export default function Ordering() {
 						<option value="zA"> Z - A </option>
 					</optgroup>
 					<optgroup label="Puntuación">
-						<option value="menor"> Menor a mayor </option>
-						<option value="mayor"> Mayor a menor </option>
+						<option value="menor"> Low - High </option>
+						<option value="mayor"> High - Low </option>
 					</optgroup>
 			</select>
 		</div>
