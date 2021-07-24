@@ -10,8 +10,8 @@ export default function Landing() {
             <div className={styles.imgCont}>
                 <img src={imgFood} alt="Imagen de comida" />
                 <div className={styles.text}> 
-                    <h1> Bienvenido! </h1>
-                    <NavLink to="/home" > Descubre tus recetas favoritas... </NavLink>
+                    <h1> Welcome! </h1>
+                    <NavLink to="/home" > Discover your favorite recipes... </NavLink>
                 </div>
             </div>
         </div>
