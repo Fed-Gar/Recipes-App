@@ -26,9 +26,9 @@ export default function FilterByType() {
   if(recipesTypes.length > 0) {
 	  return (
 		<div className={styles.ordCont}>
-			<label htmlFor="filter"> Filtrar por dietas: </label>
+			<label htmlFor="filter"> Filter by Diets: </label>
             <select name="filter" id="filter" onChange={handleChange}>
-				<option value="todas"> Todas </option>
+				<option value="todas"> All </option>
 				{
 					recipesTypes.map(type => {
 						return <option value={type.name} key={type.id} > {type.name} </option>
@@ -40,7 +40,7 @@ export default function FilterByType() {
 	} else {
 		return (
 			<div className={styles.ordCont}>
-				<label htmlFor="filter"> Filtrar por dietas: </label>
+				<label htmlFor="filter"> Filter by Diets: </label>
             	<select name="filter" id="filter" onChange={handleChange}>
 					<option value="default"> ---------------------- </option>
 				</select>
