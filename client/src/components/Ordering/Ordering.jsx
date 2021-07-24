@@ -24,11 +24,11 @@ export default function Ordering() {
 				id="order" 
 				onChange={handleChange}>
 					<option value="default"> Default </option>
-					<optgroup label="Nombre">
+					<optgroup label="Name">
 						<option value="aZ"> A - Z </option>
 						<option value="zA"> Z - A </option>
 					</optgroup>
-					<optgroup label="Puntuación">
+					<optgroup label="Score">
 						<option value="menor"> Low - High </option>
 						<option value="mayor"> High - Low </option>
 					</optgroup>
