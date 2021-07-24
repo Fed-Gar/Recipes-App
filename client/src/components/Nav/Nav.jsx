@@ -15,7 +15,7 @@ export default function Nav() {
             </div>
             <div className={styles.links}>
               <Link to="/home"> HOME </Link>
-              <Link to="/create" > Crear Receta </Link>
+              <Link to="/create" > Create Recipe </Link>
             </div>
         </nav>
     </div>
