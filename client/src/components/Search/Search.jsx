@@ -32,7 +32,7 @@ export default function Search() {
 		<form className={styles.form}>
 			<input
 				type="text"
-				placeholder="Nombre..."
+				placeholder="Ingredient..."
 				name="ingredient"
 				autoComplete="off"
 				className={styles.inp}
