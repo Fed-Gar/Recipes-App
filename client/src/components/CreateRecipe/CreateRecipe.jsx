@@ -13,16 +13,16 @@ const ALPHA = /^[a-zA-Z\s]+$/;
 export function validate(state) {
   let errors = {};
   if(!state.name) {
-    errors.name = 'Tienes que ingresar un título...';
+    errors.name = 'You have to enter a title...';
   } else if (state.name.length < 4) {
-      errors.name = 'El título es inválido. Debe tener más de 4 caracteres...';
+      errors.name = 'The title is invalid. Must be more than 4 characters...';
   } else if(!ALPHA.test(state.name)) {
-      errors.name = 'Solo se permiten letras...'
+      errors.name = 'Only letters are allowed...'
   };
   if(!state.summary) {
-    errors.summary = 'Tienes que ingresar un resumen...';
+    errors.summary = 'You have to enter a summary...';
   } else if (state.summary.length < 4) {
-      errors.summary = 'El resumen es inválido.';
+      errors.summary = 'The summary is invalid';
   };
   return errors;
 };
@@ -125,7 +125,7 @@ export default function CreateRecipe() {
     <>
       <Nav />
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label} htmlFor="name" > Título: </label>
+          <label className={styles.label} htmlFor="name" > Title: </label>
           <input
               type="text"
               id="name"
@@ -136,7 +136,7 @@ export default function CreateRecipe() {
               onChange={handleChange}
           />
           {errors.name && (<p className={styles.danger}> {errors.name} </p>)}
-          <label className={styles.label} htmlFor="summary"> Resumen: </label>
+          <label className={styles.label} htmlFor="summary"> Summary: </label>
           <textarea 
               id='summary' 
               name="summary" 
@@ -146,7 +146,7 @@ export default function CreateRecipe() {
           >
           </textarea> 
           {errors.summary && (<p className={styles.danger}> {errors.summary} </p>)}
-          <label className={styles.label} htmlFor="filter"> Tipo de Dieta: </label>
+          <label className={styles.label} htmlFor="filter"> Types of Diets: </label>
           <div className={styles.types}>
             {
               recipesTypes.map(type => {
@@ -165,7 +165,7 @@ export default function CreateRecipe() {
               })
             }
 			    </div> 
-          <label className={styles.label} htmlFor="score"> Puntuación: </label>
+          <label className={styles.label} htmlFor="score"> Score: </label>
           <input 
               type="number"
               id='score'
@@ -176,7 +176,7 @@ export default function CreateRecipe() {
               className={styles.input}
               onChange={handleChange}
           />
-          <label className={styles.label} htmlFor="health"> Nivel de salud: </label>
+          <label className={styles.label} htmlFor="health"> Health Level: </label>
           <input 
               type='number'
               id='health'
@@ -187,7 +187,7 @@ export default function CreateRecipe() {
               className={styles.input}
               onChange={handleChange}
           />
-          <label className={styles.label} htmlFor="steps"> Paso a paso: </label>
+          <label className={styles.label} htmlFor="steps"> Steps: </label>
           <textarea 
               id='steps' 
               name="steps" 
