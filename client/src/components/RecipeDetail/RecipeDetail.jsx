@@ -34,13 +34,13 @@ export default function RecipeDetail() {
           <div className={styles.container}>
             <div className={styles.header}> 
               <div className={styles.info}>
-                <h3> Receta: </h3>
+                <h3> Title: </h3>
                 <span> { data.name } </span>
                 <hr />
-                <h3> Puntuación: </h3>
+                <h3> Score: </h3>
                 <span> { data.score } </span>
                 <hr />
-                <h3> Nivel de comida saludable: </h3>
+                <h3> Health Level: </h3>
                 <span>   { data.health } </span>
               </div>
               <img src={ data.image ? data.image : notImage } alt={`Imagen ilustratiba del plato ${ data.name }`} />
@@ -49,7 +49,7 @@ export default function RecipeDetail() {
               {
                 data.typeDish && data.typeDish.length > 0 ? 
                   <>
-                    <h4> Tipos de Platos: </h4>
+                    <h4> Types of Dishes: </h4>
                     <ul className={styles.list}>
                       {
                         data.typeDish.map((dish, i) => {
@@ -64,7 +64,7 @@ export default function RecipeDetail() {
               {
                 data.typeDiet && data.typeDiet.length > 0 ? 
                   <>
-                    <h4> Tipos de Dietas: </h4>
+                    <h4> Types of Diets: </h4>
                     <ul className={styles.list}>
                       {
                         data.typeDiet.map((diet, i) => {
@@ -79,7 +79,7 @@ export default function RecipeDetail() {
               {
                 data.types && data.types.length > 0 ? 
                   <>
-                    <h4> Tipos de Dietas: </h4>
+                    <h4> Types of Diets: </h4>
                     <ul className={styles.list}>
                       {
                         data.types.map((diet, i) => {
@@ -91,10 +91,10 @@ export default function RecipeDetail() {
                   :
                   null
               }
-              <h4> Sumario: </h4>
+              <h4> Summary: </h4>
               <p> { data.summary.length > 0 ? data.summary : 'No hay más detalles...' } </p>
               <br />
-              <h4> Paso a paso: </h4>
+              <h4> Steps: </h4>
               <p> { data.steps.length > 0 ? data.steps : 'Sin detalles...' } </p>
             </div>
         </div>
