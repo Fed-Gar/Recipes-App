@@ -38,7 +38,7 @@ export default function Pagination() {
 
   return (
     <div className={styles.pagCont}>
-			<p> Páginas </p>
+			<p> Pages </p>
 			<div className={styles.pag}>
 			  <BiArrowToLeft className={styles.arrow} onClick={ handlePrev } />
 				<span> { numPag } </span>
