@@ -8,13 +8,16 @@ import { create, getTypes } from '../../actions/actionsCreator';
 import styles from "./createRecipe.module.css";
 
 // const URL = new RegExp("^(http|https)://", "i");
+const ALPHA = /^[a-zA-Z\s]+$/;
 
 export function validate(state) {
   let errors = {};
   if(!state.name) {
     errors.name = 'Tienes que ingresar un título...';
   } else if (state.name.length < 4) {
-      errors.name = 'El título es inválido.';
+      errors.name = 'El título es inválido. Debe tener más de 4 caracteres...';
+  } else if(!ALPHA.test(state.name)) {
+      errors.name = 'Solo se permiten letras...'
   };
   if(!state.summary) {
     errors.summary = 'Tienes que ingresar un resumen...';
