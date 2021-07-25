@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, {type, payload}) {
-  console.log('PAY: ', payload);
   switch (type) {
     case CHARGE_RECIPES:
       return {
@@ -33,17 +32,7 @@ export default function reducer(state = initialState, {type, payload}) {
         ...state,
         recipesTypes: payload,
       };
-    // case ORDER_RECIPES_BY_NAME:
-    //   return {
-    //     ...state,
-    //     recipesLoaded: payload,
-    //   };
-    // case ORDER_RECIPES_BY_SCORE:
-    //   return {
-    //     ...state,
-    //     recipesLoaded: payload,
-    //   };
-    case ORDER_RECIPES_BY_NAME:
+      case ORDER_RECIPES_BY_NAME:
       return {
         ...state,
         recipesLoaded: order(payload.recipes, payload.sort),
