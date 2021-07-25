@@ -14,6 +14,7 @@ export default function Recipe({ name, type, image, id }) {
       <div className={styles.diets}> 
         {
           type && type.length > 0 ? 
+            // if(type.length > 3) type.split(3);
             type.map((diet, i) => {
               if(typeof diet === 'object') {
                  return <div key={i}> <span> {diet.name} </span> <br /> </div>
@@ -21,7 +22,7 @@ export default function Recipe({ name, type, image, id }) {
               return <div key={i}> <span > {diet} </span> <br /> </div>
             })
           :
-          <span> Sin Dietas... </span>
+          <span> No Diets... </span>
         }
       </div>
       <img src={ image ? image : notImage } alt={`Imagen ilistratiba de un plato de ${title}.`} />
