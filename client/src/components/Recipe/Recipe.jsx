@@ -6,6 +6,7 @@ import notImage from '../../sources/no-image.jpg';
 
 export default function Recipe({ name, type, image, id }) {
   const title = name.split(' ').splice(0, 3).join(' ') + '...';
+  if(type && type.length > 4) type.splice(4);
   return (
     <div className={styles.contRecipe}>
       <Link to={`/detail/${id}`}>
@@ -14,7 +15,6 @@ export default function Recipe({ name, type, image, id }) {
       <div className={styles.diets}> 
         {
           type && type.length > 0 ? 
-            // if(type.length > 3) type.split(3);
             type.map((diet, i) => {
               if(typeof diet === 'object') {
                  return <div key={i}> <span> {diet.name} </span> <br /> </div>
