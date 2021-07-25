@@ -197,9 +197,9 @@ export default function CreateRecipe() {
           >
           </textarea> 
           {((!errors.name && !errors.summary) && (errors.name !== '' && errors.summary !== '')) ? 
-            (<button type="submit" className={styles.button}> Crear </button>) 
+            (<button type="submit" className={styles.button}> Create </button>) 
             : 
-            <button type="submit" className={styles.disabled} disabled> Crear </button>}
+            <button type="submit" className={styles.disabled} disabled> Create </button>}
         </form> 
     </>
   );
