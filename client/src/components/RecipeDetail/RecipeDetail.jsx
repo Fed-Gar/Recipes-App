@@ -92,10 +92,10 @@ export default function RecipeDetail() {
                   null
               }
               <h4> Summary: </h4>
-              <p> { data.summary.length > 0 ? data.summary : 'No hay más detalles...' } </p>
+              <p> { data.summary.length > 0 ? data.summary : 'No Details...' } </p>
               <br />
               <h4> Steps: </h4>
-              <p> { data.steps.length > 0 ? data.steps : 'Sin detalles...' } </p>
+              <p> { data.steps.length > 0 ? data.steps : 'No Details...' } </p>
             </div>
         </div>
       </>
